@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Image, Input, Stack, Text } from "@chakra-ui/react";
-import Logo from "../assets/Logo.png";
+import Logo from "../assets/logo_black.png";
 import React from "react";
 
 export const Navbar = () => {
