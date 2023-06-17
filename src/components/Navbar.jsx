@@ -2,7 +2,7 @@ import { Box, Button, Flex, Image, Input, Stack, Text } from "@chakra-ui/react";
 import Logo from "../assets/logo_black.png";
 import React from "react";
 
-export const Navbar = () => {
+const Navbar = () => {
   return (
     <header>
       <Box>
@@ -73,3 +73,5 @@ export const Navbar = () => {
     </header>
   );
 };
+
+export default Navbar;

@@ -4,31 +4,51 @@ import {
   Flex,
   FormControl,
   FormLabel,
+  Image,
   Input,
-  Link,
   Text,
   VStack,
 } from "@chakra-ui/react";
+import SideLogo from "../assets/logo_purple.png";
 import React from "react";
+import { Link } from "react-router-dom";
 
-export const SignIn = () => {
+const SignIn = () => {
   return (
     <div>
       <Flex>
-        <Box w={"40%"} h={"100vh"} bgColor={"#E0AAFF"}></Box>
-        <Box w={"60%"} h={"100vh"}>
-          <Box p={"20px 40px"}>
-            <Text
-              display={"flex"}
-              justifyContent={"flex-end"}
-              alignItems={"center"}
-              h={"10vh"}
+        <Box w={"40%"} h={"100vh"} bgColor={"#E0AAFF"}>
+          <Link href="/">
+            <Image src={SideLogo} h={"30px"} m={"30px 60px"} />
+          </Link>
+          <Text
+            fontSize={"lg"}
+            fontWeight={"bold"}
+            color={"#6C12B5"}
+            m={"30px 60px"}
+          >
+            A professional writer is an amateur who didn't quit.” <br /> ~
+            Richard Bach
+          </Text>
+        </Box>
+        <Box w={"70%"} p={"20px 40px"}>
+          <Box
+            display={"flex"}
+            justifyContent={"flex-end"}
+            gap={4}
+            p={"20px 40px"}
+          >
+            <Text>Not a member?</Text>
+            <Button
+              as={"a"}
+              fontSize={"md"}
+              fontWeight={400}
+              variant={"link"}
+              href={"/sign-up"}
+              color={"#9D4EDD"}
             >
-              Did you know that{" "}
-              <Link color="teal.500" href="#">
-                links can live inline with text
-              </Link>
-            </Text>
+              Sign up now
+            </Button>
           </Box>
           <VStack spacing={"4"} p={"20px 200px"}>
             <Text
@@ -43,24 +63,21 @@ export const SignIn = () => {
             <FormControl>
               <FormLabel>Username or Email Address</FormLabel>
               <Input type="email" rounded={"lg"} />
-              <FormLabel mt={"6"}>Password</FormLabel>
+              <FormLabel mt={"4"}>Password</FormLabel>
               <Input type="password" rounded={"lg"} />
-              <Box w={"100%"} display={"flex"} justifyContent={"flex-end"}>
-                <Button
-                  display={"flex"}
-                  position={"relative"}
-                  right={"0"}
-                  justifyContent={"center"}
-                  w={"50%"}
-                  mt={"6"}
-                  rounded={"lg"}
-                  color={"white"}
-                  bgColor={"#9D4EDD"}
-                  _hover={{ bgColor: "#B75CFF" }}
-                >
-                  Sign In
-                </Button>
-              </Box>
+              <Button
+                display={"flex"}
+                justifyContent={"center"}
+                w={"100%"}
+                mt={"6"}
+                rounded={"lg"}
+                color={"white"}
+                bgColor={"#9D4EDD"}
+                _hover={{ bgColor: "#B75CFF" }}
+                _active={{ bgColor: "#6C12B5" }}
+              >
+                Sign In
+              </Button>
             </FormControl>
           </VStack>
         </Box>
@@ -68,3 +85,5 @@ export const SignIn = () => {
     </div>
   );
 };
+
+export default SignIn;
