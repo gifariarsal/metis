@@ -21,7 +21,12 @@ const SignUp = () => {
       <Flex>
         <Box w={"40%"} bgColor={"#E0AAFF"}>
           <Link href="/">
-            <Image src={SideLogo} h={"30px"} m={"30px 60px"} />
+            <Image
+              src={SideLogo}
+              h={"30px"}
+              m={"30px 60px"}
+              _hover={{ filter: "brightness(150%)", transition: "300ms" }}
+            />
           </Link>
           <Text
             fontSize={"lg"}

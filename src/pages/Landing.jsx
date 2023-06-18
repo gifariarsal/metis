@@ -1,10 +1,14 @@
 import React from 'react'
-import Navbar from '../components/Navbar'
+import Navbar from '../components/NavbarUser'
+import NavbarNonUser from '../components/NavbarNonUser'
+import Footer from '../components/Footer'
 
 const Landing = () => {
   return (
     <div>
-        <Navbar />
+        <NavbarNonUser />
+        {/* <Navbar /> */}
+        <Footer />
     </div>
   )
 }
