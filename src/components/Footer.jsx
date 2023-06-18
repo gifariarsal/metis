@@ -31,7 +31,7 @@ const Footer = () => {
                 <FaInstagram size={"24px"} color="#1A202C" />
               </Link>
             </Stack>
-            <Text fontSize={"sm"} mt={"40px"} color={"gray.500"}>
+            <Text fontSize={"sm"} mt={"54px"} color={"gray.500"}>
               © 2023 Metis. All rights reserved
             </Text>
           </Box>
@@ -43,16 +43,17 @@ const Footer = () => {
                   placeholder={"Your email address"}
                   _placeholder={{ fontSize: "sm", color: "gray.400" }}
                   rounded={"xl"}
-                  bg={"whiteAlpha.200"}
+                  bg={"whiteAlpha.600"}
                   _focus={{
-                    bg: "whiteAlpha.800",
+                    bg: "whiteAlpha.900",
                   }}
                 />
                 <IconButton
                   bg={"gray.800"}
                   color={"white"}
+                  rounded={"xl"}
                   _hover={{
-                    bg: "#9D4EDD",
+                    bg: "gray.600",
                   }}
                   aria-label="Subscribe"
                   icon={<BiMailSend />}

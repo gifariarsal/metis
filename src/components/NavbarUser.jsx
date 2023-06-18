@@ -23,7 +23,8 @@ const NavbarUser = () => {
               <Input
                 ml={4}
                 placeholder="Search..."
-                rounded={"lg"}
+                _placeholder={{ fontSize: "sm", color: "gray.400" }}
+                rounded={"xl"}
                 focusBorderColor="#C77DFF"
                 w={"auto"}
               />
