@@ -8,12 +8,20 @@ import {
   Input,
   Text,
   VStack,
+  useDisclosure,
 } from "@chakra-ui/react";
 import SideLogo from "../assets/logo_purple.png";
 import React from "react";
 import { Link } from "react-router-dom";
+import ForgotPassModal from "../components/ForgotPassModal";
 
 const SignIn = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const onForgot = () => {
+    onOpen();
+  }
+
   return (
     <div>
       <Flex>
@@ -68,7 +76,21 @@ const SignIn = () => {
             <FormControl>
               <FormLabel>Username or Email Address</FormLabel>
               <Input type="email" rounded={"lg"} />
-              <FormLabel mt={"4"}>Password</FormLabel>
+              <FormLabel mt={"4"}>
+                <Flex alignItems={"baseline"} justifyContent={"space-between"}>
+                  Password
+                  <Button variant={"link"} onClick={onForgot}>
+                    <Text
+                      fontSize={"xs"}
+                      fontWeight={400}
+                      color={"blue"}
+                      _hover={{ textDecoration: "underline" }}
+                    >
+                      Forgot Password?
+                    </Text>
+                  </Button>
+                </Flex>
+              </FormLabel>
               <Input type="password" rounded={"lg"} />
               <Button
                 display={"flex"}
@@ -87,6 +109,7 @@ const SignIn = () => {
           </VStack>
         </Box>
       </Flex>
+      <ForgotPassModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
     </div>
   );
 };

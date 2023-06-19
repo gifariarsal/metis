@@ -44,6 +44,7 @@ const Footer = () => {
                   _placeholder={{ fontSize: "sm", color: "gray.400" }}
                   rounded={"xl"}
                   bg={"whiteAlpha.600"}
+                  focusBorderColor="#C77DFF"
                   _focus={{
                     bg: "whiteAlpha.900",
                   }}
