@@ -1,6 +1,9 @@
 import {
   Box,
+  Button,
   Flex,
+  Select,
+  Spacer,
   Tab,
   TabIndicator,
   TabList,
@@ -16,37 +19,42 @@ const UserProfile = () => {
   return (
     <>
       <NavbarUser />
-      <Flex flexDir={"column"} align={"center"}>
-        <Box m={"40px 60px"}>
-          <ProfileDetail />
-        </Box>
-        <Box m={"40px 60px"}>
-          <Tabs position="relative" variant="unstyled">
-            <TabList>
-              <Tab>One</Tab>
-              <Tab>Two</Tab>
-              <Tab>Three</Tab>
-            </TabList>
-            <TabIndicator
-              mt="-1.5px"
-              height="2px"
-              bg="blue.500"
-              borderRadius="1px"
-            />
-            <TabPanels>
-              <TabPanel>
-                <p>one!</p>
-              </TabPanel>
-              <TabPanel>
-                <p>two!</p>
-              </TabPanel>
-              <TabPanel>
-                <p>three!</p>
-              </TabPanel>
-            </TabPanels>
-          </Tabs>
-        </Box>
-      </Flex>
+      <Box display={"flex"} justifyContent={"center"} m={"40px 60px"}>
+        <ProfileDetail />
+      </Box>
+      <Box display={"flex"} justifyContent={"flex-start"} m={"40px 60px"}>
+        <Tabs position="relative" variant="unstyled">
+          <TabList gap={10}>
+            <Tab>My Writings</Tab>
+            <Tab>Bookmarks</Tab>
+            <Tab>Likes</Tab>
+          </TabList>
+          <TabIndicator
+            mt="-1.5px"
+            height="2px"
+            bg="#9D4EDD"
+            borderRadius="1px"
+          />
+          <TabPanels>
+            <TabPanel>
+              <p>one!</p>
+            </TabPanel>
+            <TabPanel>
+              <p>two!</p>
+            </TabPanel>
+            <TabPanel>
+              <p>three!</p>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+        <Spacer />
+        <Select focusBorderColor="#C77DFF" w={"fit-content"}>
+          <option value="newest" defaultChecked>
+            Newest
+          </option>
+          <option value="latest">Latest</option>
+        </Select>
+      </Box>
     </>
   );
 };
