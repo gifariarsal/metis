@@ -1,7 +1,5 @@
 import {
   Box,
-  Button,
-  Flex,
   Select,
   Spacer,
   Tab,

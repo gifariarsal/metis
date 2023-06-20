@@ -1,6 +1,19 @@
-import { Avatar, Box, Button, Flex, Image, Input, Menu, MenuButton, MenuDivider, MenuItem, MenuList, Text } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Button,
+  Flex,
+  Image,
+  Input,
+  Menu,
+  MenuButton,
+  MenuDivider,
+  MenuItem,
+  MenuList,
+  Text,
+} from "@chakra-ui/react";
 import Logo from "../assets/logo_black.png";
-import {HiOutlinePencilSquare} from "react-icons/hi2"
+import { HiOutlinePencilSquare } from "react-icons/hi2";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -19,7 +32,13 @@ const NavbarUser = () => {
         >
           <Box w={"50%"} m={"16px 60px"}>
             <Flex justifyContent={"flex-start"} align={"center"}>
-              <Image src={Logo} h={"32px"}></Image>
+              <Link to={"/"}>
+                <Image
+                  src={Logo}
+                  h={"32px"}
+                  _hover={{ filter: "brightness(150%)", transition: "300ms" }}
+                ></Image>
+              </Link>
               <Input
                 ml={4}
                 placeholder="Search..."

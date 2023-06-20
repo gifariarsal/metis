@@ -1,6 +1,7 @@
 import { Box, Button, Flex, Image, Input, Stack, Text } from "@chakra-ui/react";
 import Logo from "../assets/logo_black.png";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const NavbarNonUser = () => {
   return (
@@ -17,7 +18,13 @@ const NavbarNonUser = () => {
         >
           <Box w={"50%"} m={"16px 60px"}>
             <Flex justifyContent={"flex-start"} align={"center"}>
-              <Image src={Logo} h={"32px"}></Image>
+              <Link to={"/"}>
+                <Image
+                  src={Logo}
+                  h={"32px"}
+                  _hover={{ filter: "brightness(150%)", transition: "300ms" }}
+                ></Image>
+              </Link>
               <Input
                 ml={4}
                 placeholder="Search..."
