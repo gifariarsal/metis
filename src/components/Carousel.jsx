@@ -62,8 +62,9 @@ export default function CaptionCarousel() {
   return (
     <Box
       position={"relative"}
-      height={"600px"}
+      height={"400px"}
       width={"full"}
+      rounded={"lg"}
       overflow={"hidden"}
     >
       {/* CSS files for react-slick */}
@@ -85,7 +86,7 @@ export default function CaptionCarousel() {
         position="absolute"
         left={side}
         top={top}
-        transform={"translate(0%, -50%)"}
+        transform={"translate(-50%, -50%)"}
         zIndex={2}
         onClick={() => slider?.slickPrev()}
       >
@@ -98,7 +99,7 @@ export default function CaptionCarousel() {
         position="absolute"
         right={side}
         top={top}
-        transform={"translate(0%, -50%)"}
+        transform={"translate(50%, -50%)"}
         zIndex={2}
         onClick={() => slider?.slickNext()}
       >
@@ -126,10 +127,10 @@ export default function CaptionCarousel() {
                 top="50%"
                 transform="translate(0, -50%)"
               >
-                <Heading fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }}>
+                <Heading fontSize={"4xl"}>
                   {card.title}
                 </Heading>
-                <Text fontSize={{ base: "md", lg: "lg" }} color="GrayText">
+                <Text fontSize={"md"} color="GrayText">
                   {card.text}
                 </Text>
               </Stack>

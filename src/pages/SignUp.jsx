@@ -20,7 +20,7 @@ const SignUp = () => {
     <div>
       <Flex>
         <Box w={"40%"} bgColor={"#E0AAFF"}>
-          <Link href="/">
+          <Link to={"/"}>
             <Image
               src={SideLogo}
               h={"30px"}

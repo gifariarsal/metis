@@ -19,7 +19,13 @@ const Footer = () => {
       <Box h={"200px"} bgColor={"#F5F5F8"}>
         <Flex>
           <Box w={"50%"} m={"16px 60px"}>
-            <Image src={FooterLogo} h={"28px"} />
+            <Link to={"/"}>
+              <Image
+                src={FooterLogo}
+                h={"28px"}
+                _hover={{ filter: "brightness(150%)", transition: "300ms" }}
+              />
+            </Link>
             <Stack direction={"row"} spacing={8} mt={"32px"}>
               <Link to={"https://twitter.com/"}>
                 <FaTwitter size={"24px"} color="#1A202C" />

@@ -10,7 +10,7 @@ const Landing = () => {
     <div>
       <NavbarNonUser />
       <Flex m={"16px 60px"} gap={4}>
-        <Box w={"70%"}>
+        <Box w={"70%"} display={"flex"} flexDir={"column"} gap={4}>
           <Carousel />
           <BlogCard />
         </Box>

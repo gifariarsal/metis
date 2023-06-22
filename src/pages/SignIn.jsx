@@ -26,7 +26,7 @@ const SignIn = () => {
     <div>
       <Flex>
         <Box w={"40%"} h={"100vh"} bgColor={"#E0AAFF"}>
-          <Link href="/">
+          <Link to={"/"}>
             <Image
               src={SideLogo}
               h={"30px"}
