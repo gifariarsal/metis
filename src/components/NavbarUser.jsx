@@ -54,23 +54,25 @@ const NavbarUser = () => {
           </Box>
           <Box w={"50%"} m={"16px 60px"}>
             <Flex justifyContent={"flex-end"}>
-              <Button
-                mr={10}
-                as={"a"}
-                display={"inline-flex"}
-                fontSize={"sm"}
-                fontWeight={600}
-                color={"white"}
-                bg={"gray.800"}
-                rounded={"lg"}
-                href={"#"}
-                _hover={{
-                  bg: "gray.600",
-                }}
-              >
-                <HiOutlinePencilSquare />
-                <Text ml={2}>Write</Text>
-              </Button>
+              <Link to={"/write-blog"}>
+                <Button
+                  mr={10}
+                  display={"inline-flex"}
+                  fontSize={"sm"}
+                  fontWeight={600}
+                  color={"gray.800"}
+                  bg={"white"}
+                  border={"1px"}
+                  borderColor={"gray.800"}
+                  rounded={"lg"}
+                  _hover={{
+                    bg: "gray.100",
+                  }}
+                >
+                  <HiOutlinePencilSquare />
+                  <Text ml={2}>Write</Text>
+                </Button>
+              </Link>
               <Flex alignItems={"center"}>
                 <Menu>
                   <MenuButton
@@ -89,9 +91,11 @@ const NavbarUser = () => {
                   </MenuButton>
                   <MenuList>
                     <MenuItem>
-                      <Link to="/user-profile">Profile</Link>
+                      <Link to={"/user-profile"}>Profile</Link>
                     </MenuItem>
-                    <MenuItem>Edit Profile</MenuItem>
+                    <MenuItem>
+                      <Link to={"/change-password"}>Change Password</Link>
+                    </MenuItem>
                     <MenuDivider />
                     <MenuItem color={"red"}>Sign out</MenuItem>
                   </MenuList>

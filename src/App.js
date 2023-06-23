@@ -6,6 +6,7 @@ import UserProfile from './pages/UserProfile';
 import EmailVerification from './pages/EmailVerification';
 import WriteBlog from './pages/WriteBlog';
 import ResetPassword from './pages/ResetPassword';
+import ChangePassword from './pages/ChangePassword';
 
 
 function App() {
@@ -16,9 +17,10 @@ function App() {
       <Route path='/sign-in' element={<SignIn />} />
       <Route path='/sign-up' element={<SignUp />} />
       <Route path='/user-profile' element={<UserProfile />} />
-      <Route path='/email-verification' element={<EmailVerification />} />
+      <Route path='/verification/:token' element={<EmailVerification />} />
       <Route path='/write-blog' element={<WriteBlog />} />
       <Route path='/reset-password' element={<ResetPassword />} />
+      <Route path='/change-password' element={<ChangePassword />} />
     </Routes>
     </>
   );

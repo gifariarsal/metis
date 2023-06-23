@@ -2,8 +2,12 @@ import { Box, Button, Flex, Image, Input, Stack, Text } from "@chakra-ui/react";
 import Logo from "../assets/logo_black.png";
 import React from "react";
 import { Link } from "react-router-dom";
+import { HiOutlinePencilSquare } from "react-icons/hi2";
+import NavUser from "./NavUser";
+import NavNonUser from "./NavNonUser";
 
 const NavbarNonUser = () => {
+  const login = localStorage.getItem("token")
   return (
     <header>
       <Box>
@@ -39,35 +43,7 @@ const NavbarNonUser = () => {
             </Flex>
           </Box>
           <Box w={"50%"} m={"16px 60px"}>
-            <Flex justifyContent={"flex-end"}>
-              <Stack direction={"row"} spacing={6}>
-                <Button
-                  as={"a"}
-                  fontSize={"sm"}
-                  fontWeight={400}
-                  variant={"link"}
-                  href={"/sign-in"}
-                  color={"gray.800"}
-                >
-                  Sign In
-                </Button>
-                <Button
-                  as={"a"}
-                  display={"inline-flex"}
-                  fontSize={"sm"}
-                  fontWeight={700}
-                  color={"white"}
-                  bg={"gray.800"}
-                  rounded={"lg"}
-                  href={"/sign-up"}
-                  _hover={{
-                    bg: "gray.600",
-                  }}
-                >
-                  Sign Up
-                </Button>
-              </Stack>
-            </Flex>
+            {login !== null ? (<NavUser />):(<NavNonUser />)}
           </Box>
         </Flex>
       </Box>

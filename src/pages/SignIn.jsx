@@ -19,15 +19,17 @@ import axios from "axios";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignIn = () => {
-  // for forgot password
+  // modal for forgot password
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const onForgot = () => {
     onOpen();
   };
+
+  const navigate = useNavigate();
 
   // auth
   const dispatch = useDispatch();
@@ -48,6 +50,7 @@ const SignIn = () => {
       console.log(res);
       if (res.status === 200) {
         dispatch(loginSuccess(res.data.token));
+        navigate("/")
       }
     } catch (err) {
       console.log(err);
@@ -73,7 +76,7 @@ const SignIn = () => {
     validationSchema: LoginSchema,
     onSubmit: (values) => {
       login(values);
-      onClose();
+      // navigate()
     },
   });
 

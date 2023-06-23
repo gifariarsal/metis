@@ -5,6 +5,7 @@ import {
   Flex,
   FormControl,
   FormErrorMessage,
+  FormHelperText,
   FormLabel,
   Image,
   Input,
@@ -13,29 +14,32 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import SideLogo from "../assets/logo_purple.png";
-import { useFormik } from "formik";
+import { ErrorMessage, useFormik } from "formik";
 import axios from "axios";
 import * as Yup from "yup";
 import React from "react";
 
 const SignUp = () => {
-  // const register = async (values) => {
-  //   const res = await axios.post(
-  //     "https://minpro-blog.purwadhikabootcamp.com/api/auth/",
-  //     {
-  //       username: values.username,
-  //       email: values.email,
-  //       phone: values.phone,
-  //       password: values.password,
-  //       confirmPassword: values.confirmPassword,
-  //     }
-  //   );
-
-  //   console.log(res);
-  // };
+  const register = async (values) => {
+    try {
+      const res = await axios.post(
+        "https://minpro-blog.purwadhikabootcamp.com/api/auth/",
+        {
+          username: values.username,
+          email: values.email,
+          phone: values.phone,
+          password: values.password,
+          confirmPassword: values.confirmPassword,
+        }
+      );
+      alert(res);
+    } catch (err) {
+      alert(err);
+    }
+  };
 
   // validation
-  const LoginSchema = Yup.object().shape({
+  const SignUpSchema = Yup.object().shape({
     username: Yup.string().required("Username is required"),
     email: Yup.string()
       .email("Invalid email address format")
@@ -62,9 +66,9 @@ const SignUp = () => {
       password: "",
       confirmPassword: "",
     },
-    validationSchema: LoginSchema,
+    validationSchema: SignUpSchema,
     onSubmit: (values) => {
-      // register(values);
+      register(values);
     },
   });
 
@@ -177,17 +181,21 @@ const SignUp = () => {
                   id="password"
                   name="password"
                   type="password"
-                  placeholder="6+ char, min. 1 uppercase and 1 symbol"
+                  placeholder="6+ chars, min. 1 uppercase and 1 symbol"
                   _placeholder={{
                     fontSize: "xs",
-                    color: "gray.500"
+                    color: "gray.500",
                   }}
                   rounded={"lg"}
                   onChange={formik.handleChange}
                   value={formik.values.password}
                 />
+                {/* <ErrorMessage name="password" component={FormHelperText}></ErrorMessage> */}
                 {formik.touched.password && formik.errors.password && (
-                  <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
+                  <ErrorMessage
+                    name="password"
+                    component={FormHelperText}
+                  ></ErrorMessage>
                 )}
               </FormControl>
               <FormControl
@@ -233,7 +241,7 @@ const SignUp = () => {
                 bgColor={"#9D4EDD"}
                 _hover={{ bgColor: "#B75CFF" }}
                 _active={{ bgColor: "#6C12B5" }}
-                // onClick={() => register(formik.values)}
+                onClick={() => register()}
               >
                 Create Account
               </Button>

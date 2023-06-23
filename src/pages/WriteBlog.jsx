@@ -127,9 +127,15 @@ const WriteBlog = () => {
           <FormLabel>Category</FormLabel>
           <Select value={category} onChange={handleCategoryChange}>
             <option value="">Select Category</option>
-            <option value="option1">Opsi 1</option>
-            <option value="option2">Opsi 2</option>
-            <option value="option3">Opsi 3</option>
+            <option value="food">Food</option>
+            <option value="travel">Travel</option>
+            <option value="health">Health</option>
+            <option value="education">Education</option>
+            <option value="business">Business</option>
+            <option value="technology">Technology</option>
+            <option value="religion">Religion</option>
+            <option value="gaming">Gaming</option>
+            <option value="other">Other</option>
           </Select>
         </FormControl>
         <FormControl id="keyword">
