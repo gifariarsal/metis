@@ -18,6 +18,7 @@ import TagsInput from "react-tagsinput";
 import "react-tagsinput/react-tagsinput.css";
 
 const WriteBlog = () => {
+  //set date published to current date
   const currentDate = new Date().toISOString().split("T")[0];
 
   const [isFormEmpty, setIsFormEmpty] = useState(false);
@@ -28,6 +29,7 @@ const WriteBlog = () => {
     setContent(value);
   };
 
+  // validation for image size and format
   const handleImageChange = (event) => {
     const file = event.target.files[0];
 
@@ -41,6 +43,7 @@ const WriteBlog = () => {
     }
   };
 
+  // keywords
   const [keywords, setKeywords] = useState([]);
 
   const handleKeywordsChange = (newKeywords) => {

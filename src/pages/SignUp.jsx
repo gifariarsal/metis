@@ -4,7 +4,7 @@ import {
   Checkbox,
   Flex,
   FormControl,
-  FormHelperText,
+  FormErrorMessage,
   FormLabel,
   Image,
   Input,
@@ -13,9 +13,61 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import SideLogo from "../assets/logo_purple.png";
+import { useFormik } from "formik";
+import axios from "axios";
+import * as Yup from "yup";
 import React from "react";
 
 const SignUp = () => {
+  // const register = async (values) => {
+  //   const res = await axios.post(
+  //     "https://minpro-blog.purwadhikabootcamp.com/api/auth/",
+  //     {
+  //       username: values.username,
+  //       email: values.email,
+  //       phone: values.phone,
+  //       password: values.password,
+  //       confirmPassword: values.confirmPassword,
+  //     }
+  //   );
+
+  //   console.log(res);
+  // };
+
+  // validation
+  const LoginSchema = Yup.object().shape({
+    username: Yup.string().required("Username is required"),
+    email: Yup.string()
+      .email("Invalid email address format")
+      .required("Email is required"),
+    phone: Yup.string()
+      .matches(/^[0-9]+$/, "Phone number must contain only digits")
+      .required("Phone number is required"),
+    password: Yup.string()
+      .matches(
+        /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()])[A-Za-z\d!@#$%^&*()]{6,}$/,
+        "Password must contain at least 6 characters, 1 symbol, and 1 uppercase"
+      )
+      .required("Password is required"),
+    confirmPassword: Yup.string()
+      .required("Confirm Password is required")
+      .oneOf([Yup.ref("password"), null], "Passwords must match"),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      email: "",
+      phone: "",
+      password: "",
+      confirmPassword: "",
+    },
+    validationSchema: LoginSchema,
+    onSubmit: (values) => {
+      // register(values);
+    },
+  });
+
   return (
     <div>
       <Flex>
@@ -57,7 +109,7 @@ const SignUp = () => {
               Sign in
             </Button>
           </Box>
-          <VStack spacing={"4"} p={"20px 200px"}>
+          <VStack spacing={4} p={"20px 200px"}>
             <Text
               w={"100%"}
               fontSize={"xx-large"}
@@ -67,56 +119,125 @@ const SignUp = () => {
             >
               Sign Up to Metis
             </Text>
-            <FormControl id="username" isRequired>
-              <FormLabel>Username</FormLabel>
-              <Input type="text" rounded={"lg"} />
-            </FormControl>
-            <FormControl id="name">
-              <FormLabel>Name</FormLabel>
-              <Input type="text" rounded={"lg"} />
-            </FormControl>
-            <FormControl id="email" isRequired>
-              <FormLabel>Email Address</FormLabel>
-              <Input type="email" rounded={"lg"} />
-            </FormControl>
-            <FormControl id="phone-number" isRequired>
-              <FormLabel>Phone Number</FormLabel>
-              <Input type="tel" rounded={"lg"} />
-            </FormControl>
-            <FormControl id="password" isRequired>
-              <FormLabel>Password</FormLabel>
-              <Input
-                type="password"
-                placeholder="6+ character"
+            <form onSubmit={formik.handleSubmit}>
+              <FormControl
+                isRequired
+                isInvalid={formik.touched.username && formik.errors.username}
+              >
+                <FormLabel>Username</FormLabel>
+                <Input
+                  id="username"
+                  name="username"
+                  type="text"
+                  rounded={"lg"}
+                  onChange={formik.handleChange}
+                  value={formik.values.username}
+                />
+              </FormControl>
+              <FormControl
+                isRequired
+                isInvalid={formik.touched.email && formik.errors.email}
+              >
+                <FormLabel mt={4}>Email Address</FormLabel>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  rounded={"lg"}
+                  onChange={formik.handleChange}
+                  value={formik.values.email}
+                />
+                {formik.touched.email && formik.errors.email && (
+                  <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
+                )}
+              </FormControl>
+              <FormControl
+                isRequired
+                isInvalid={formik.touched.password && formik.errors.password}
+              >
+                <FormLabel mt={4}>Phone Number</FormLabel>
+                <Input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  rounded={"lg"}
+                  onChange={formik.handleChange}
+                  value={formik.values.phone}
+                />
+                {formik.touched.phone && formik.errors.phone && (
+                  <FormErrorMessage>{formik.errors.phone}</FormErrorMessage>
+                )}
+              </FormControl>
+              <FormControl
+                isRequired
+                isInvalid={formik.touched.password && formik.errors.password}
+              >
+                <FormLabel mt={4}>Password</FormLabel>
+                <Input
+                  id="password"
+                  name="password"
+                  type="password"
+                  placeholder="6+ char, min. 1 uppercase and 1 symbol"
+                  _placeholder={{
+                    fontSize: "xs",
+                    color: "gray.500"
+                  }}
+                  rounded={"lg"}
+                  onChange={formik.handleChange}
+                  value={formik.values.password}
+                />
+                {formik.touched.password && formik.errors.password && (
+                  <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
+                )}
+              </FormControl>
+              <FormControl
+                isRequired
+                isInvalid={
+                  formik.touched.confirmPassword &&
+                  formik.errors.confirmPassword
+                }
+              >
+                <FormLabel mt={4}>Confirm Password</FormLabel>
+                <Input
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type="password"
+                  rounded={"lg"}
+                  onChange={formik.handleChange}
+                  value={formik.values.confirmPassword}
+                />
+                {formik.touched.confirmPassword &&
+                  formik.errors.confirmPassword && (
+                    <FormErrorMessage>
+                      {formik.errors.confirmPassword}
+                    </FormErrorMessage>
+                  )}
+              </FormControl>
+              <Checkbox
+                display={"flex"}
+                alignItems={"baseline"}
+                mt={"4"}
+                size={"sm"}
+              >
+                Creating an account means you're okay with our Terms of Service,
+                Privacy Policy, and our default Notification Settings.
+              </Checkbox>
+              <Button
+                type="submit"
+                display={"flex"}
+                justifyContent={"center"}
+                w={"100%"}
+                mt={"10"}
                 rounded={"lg"}
-              />
-              <FormHelperText fontSize={"xs"}>
-                Password must contain at least 6 characters, 1 symbol, and 1
-                uppercase
-              </FormHelperText>
-            </FormControl>
-            <Checkbox
-              display={"flex"}
-              alignItems={"baseline"}
-              mt={"4"}
-              size={"sm"}
-            >
-              Creating an account means you're okay with our Terms of Service,
-              Privacy Policy, and our default Notification Settings.
-            </Checkbox>
-            <Button
-              display={"flex"}
-              justifyContent={"center"}
-              w={"100%"}
-              mt={"10"}
-              rounded={"lg"}
-              color={"white"}
-              bgColor={"#9D4EDD"}
-              _hover={{ bgColor: "#B75CFF" }}
-              _active={{ bgColor: "#6C12B5" }}
-            >
-              Create Account
-            </Button>
+                color={"white"}
+                bgColor={"#9D4EDD"}
+                _hover={{ bgColor: "#B75CFF" }}
+                _active={{ bgColor: "#6C12B5" }}
+                // onClick={() => register(formik.values)}
+              >
+                Create Account
+              </Button>
+            </form>
           </VStack>
         </Box>
       </Flex>

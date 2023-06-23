@@ -5,7 +5,3 @@
 .react-tagsinput {
     border-radius: 8px;
 }
-
-.tagsinput:focus {
-    border-color: brown;
-}

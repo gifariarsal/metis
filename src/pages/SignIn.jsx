@@ -3,6 +3,7 @@ import {
   Button,
   Flex,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Image,
   Input,
@@ -11,16 +12,70 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import SideLogo from "../assets/logo_purple.png";
+import ForgotPassModal from "../components/ForgotPassModal";
+import { loginSuccess } from "../redux/reducer/AuthReducer";
+import { useFormik } from "formik";
+import axios from "axios";
+import * as Yup from "yup";
+import { useSelector, useDispatch } from "react-redux";
 import React from "react";
 import { Link } from "react-router-dom";
-import ForgotPassModal from "../components/ForgotPassModal";
 
 const SignIn = () => {
+  // for forgot password
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const onForgot = () => {
     onOpen();
-  }
+  };
+
+  // auth
+  const dispatch = useDispatch();
+  const loginButton = useSelector((state) => state.AuthReducer.login);
+
+  const login = async (values) => {
+    try {
+      const { username, email, phone, password } = values;
+      const res = await axios.post(
+        "https://minpro-blog.purwadhikabootcamp.com/api/auth/login",
+        {
+          username: username,
+          email: email,
+          phone: phone,
+          password: password,
+        }
+      );
+      console.log(res);
+      if (res.status === 200) {
+        dispatch(loginSuccess(res.data.token));
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // validation
+  const LoginSchema = Yup.object().shape({
+    email: Yup.string()
+      .email("Invalid email address format")
+      .required("Email is required"),
+    password: Yup.string()
+      .required("Password is required"),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      email: "",
+      phone: "",
+      password: "",
+    },
+    validationSchema: LoginSchema,
+    onSubmit: (values) => {
+      login(values);
+      onClose();
+    },
+  });
 
   return (
     <div>
@@ -64,6 +119,7 @@ const SignIn = () => {
             </Button>
           </Box>
           <VStack spacing={"4"} p={"20px 200px"}>
+            <Box w={"full"}>
             <Text
               w={"100%"}
               fontSize={"xx-large"}
@@ -73,39 +129,84 @@ const SignIn = () => {
             >
               Sign In to Metis
             </Text>
-            <FormControl>
-              <FormLabel>Username or Email Address</FormLabel>
-              <Input type="email" rounded={"lg"} />
-              <FormLabel mt={"4"}>
-                <Flex alignItems={"baseline"} justifyContent={"space-between"}>
-                  Password
-                  <Button variant={"link"} onClick={onForgot}>
-                    <Text
-                      fontSize={"xs"}
-                      fontWeight={400}
-                      color={"blue"}
-                      _hover={{ textDecoration: "underline" }}
-                    >
-                      Forgot Password?
-                    </Text>
-                  </Button>
-                </Flex>
-              </FormLabel>
-              <Input type="password" rounded={"lg"} />
-              <Button
-                display={"flex"}
-                justifyContent={"center"}
-                w={"100%"}
-                mt={"6"}
-                rounded={"lg"}
-                color={"white"}
-                bgColor={"#9D4EDD"}
-                _hover={{ bgColor: "#B75CFF" }}
-                _active={{ bgColor: "#6C12B5" }}
+              <Text
+                fontSize={"xs"}
+                color={"gray.400"}
+                fontStyle={"italic"}
+                align={"left"}
               >
-                Sign In
-              </Button>
-            </FormControl>
+                You can login by username, email, or phone number
+              </Text>
+            </Box>
+            <Box w={"full"}>
+              <form onSubmit={formik.handleSubmit}>
+                <FormControl
+                  isInvalid={formik.touched.email && formik.errors.email}
+                >
+                  <FormLabel htmlFor="email">Email Address</FormLabel>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    onChange={formik.handleChange}
+                    value={formik.values.email}
+                    rounded={"lg"}
+                  />
+                  {formik.touched.email && formik.errors.email && (
+                    <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
+                  )}
+                </FormControl>
+                <FormControl
+                  isInvalid={formik.touched.password && formik.errors.password}
+                >
+                  <FormLabel htmlFor="password" mt={"4"}>
+                    <Flex
+                      alignItems={"baseline"}
+                      justifyContent={"space-between"}
+                    >
+                      Password
+                      <Button variant={"link"} onClick={onForgot}>
+                        <Text
+                          fontSize={"xs"}
+                          fontWeight={400}
+                          color={"blue"}
+                          _hover={{ textDecoration: "underline" }}
+                        >
+                          Forgot Password?
+                        </Text>
+                      </Button>
+                    </Flex>
+                  </FormLabel>
+                  <Input
+                    id="password"
+                    name="password"
+                    type="password"
+                    onChange={formik.handleChange}
+                    value={formik.values.password}
+                    rounded={"lg"}
+                  />
+                  {formik.touched.password && formik.errors.password && (
+                    <FormErrorMessage>
+                      {formik.errors.password}
+                    </FormErrorMessage>
+                  )}
+                </FormControl>
+                <Button
+                  type="submit"
+                  display={"flex"}
+                  justifyContent={"center"}
+                  w={"100%"}
+                  mt={"6"}
+                  rounded={"lg"}
+                  color={"white"}
+                  bgColor={"#9D4EDD"}
+                  _hover={{ bgColor: "#B75CFF" }}
+                  _active={{ bgColor: "#6C12B5" }}
+                >
+                  Sign In
+                </Button>
+              </form>
+            </Box>
           </VStack>
         </Box>
       </Flex>
