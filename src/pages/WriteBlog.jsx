@@ -10,7 +10,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import NavbarUser from "../components/NavbarUser";
+import Navbar from "../components/Navbar";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "./WriteBlog.css";
@@ -90,7 +90,7 @@ const WriteBlog = () => {
 
   return (
     <Box>
-      <NavbarUser></NavbarUser>
+      <Navbar />
       <VStack spacing={"4"} p={"20px 200px"}>
         <Text
           w={"100%"}

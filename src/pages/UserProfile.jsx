@@ -11,12 +11,12 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import ProfileDetail from "../components/ProfileDetail";
-import NavbarUser from "../components/NavbarUser";
+import Navbar from "../components/Navbar";
 
 const UserProfile = () => {
   return (
     <>
-      <NavbarUser />
+      <Navbar />
       <Box display={"flex"} justifyContent={"center"} m={"40px 60px"}>
         <ProfileDetail />
       </Box>

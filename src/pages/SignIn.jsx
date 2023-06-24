@@ -7,6 +7,8 @@ import {
   FormLabel,
   Image,
   Input,
+  InputGroup,
+  InputRightElement,
   Text,
   VStack,
   useDisclosure,
@@ -20,8 +22,12 @@ import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 
 const SignIn = () => {
+  const [show, setShow] = React.useState(false);
+  const handleClick = () => setShow(!show);
+  
   // modal for forgot password
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -33,7 +39,7 @@ const SignIn = () => {
 
   // auth
   const dispatch = useDispatch();
-  const loginButton = useSelector((state) => state.AuthReducer.login);
+  // const loginButton = useSelector((state) => state.AuthReducer.login);
 
   const login = async (values) => {
     try {
@@ -123,15 +129,15 @@ const SignIn = () => {
           </Box>
           <VStack spacing={"4"} p={"20px 200px"}>
             <Box w={"full"}>
-            <Text
-              w={"100%"}
-              fontSize={"xx-large"}
-              display={"flex"}
-              justifyContent={"flex-start"}
-              fontWeight={"bold"}
-            >
-              Sign In to Metis
-            </Text>
+              <Text
+                w={"100%"}
+                fontSize={"xx-large"}
+                display={"flex"}
+                justifyContent={"flex-start"}
+                fontWeight={"bold"}
+              >
+                Sign In to Metis
+              </Text>
               <Text
                 fontSize={"xs"}
                 color={"gray.400"}
@@ -180,14 +186,25 @@ const SignIn = () => {
                       </Button>
                     </Flex>
                   </FormLabel>
-                  <Input
-                    id="password"
-                    name="password"
-                    type="password"
-                    onChange={formik.handleChange}
-                    value={formik.values.password}
-                    rounded={"lg"}
-                  />
+                  <InputGroup>
+                    <Input
+                      id="password"
+                      name="password"
+                      type={show ? "text" : "password"}
+                      onChange={formik.handleChange}
+                      value={formik.values.password}
+                      rounded={"lg"}
+                    />
+                    <InputRightElement width="3.5rem">
+                      <Button h="1.75rem" size="sm" onClick={handleClick}>
+                        {show ? (
+                          <IoEyeOffOutline size={"20px"} />
+                        ) : (
+                          <IoEyeOutline size={"20px"} />
+                        )}
+                      </Button>
+                    </InputRightElement>
+                  </InputGroup>
                   {formik.touched.password && formik.errors.password && (
                     <FormErrorMessage>
                       {formik.errors.password}

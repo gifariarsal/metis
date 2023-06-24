@@ -9,17 +9,19 @@ import {
   FormLabel,
   Image,
   Input,
-  Link,
   Text,
   VStack,
+  useToast,
 } from "@chakra-ui/react";
 import SideLogo from "../assets/logo_purple.png";
 import { ErrorMessage, useFormik } from "formik";
 import axios from "axios";
 import * as Yup from "yup";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
+  const toast = useToast();
   const register = async (values) => {
     try {
       const res = await axios.post(
@@ -32,9 +34,19 @@ const SignUp = () => {
           confirmPassword: values.confirmPassword,
         }
       );
-      alert(res);
+      toast({
+        title: "Register Success",
+        status: "success",
+        duration: "2000",
+        isClosable: true,
+      });
     } catch (err) {
-      alert(err);
+      toast({
+        title: "Register Failed",
+        status: "error",
+        duration: "2000",
+        isClosable: true,
+      });
     }
   };
 
@@ -68,7 +80,7 @@ const SignUp = () => {
     },
     validationSchema: SignUpSchema,
     onSubmit: (values) => {
-      register(values);
+      register(values); // Pass the form values to the register function
     },
   });
 
@@ -135,8 +147,12 @@ const SignUp = () => {
                   type="text"
                   rounded={"lg"}
                   onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   value={formik.values.username}
                 />
+                {formik.touched.username && formik.errors.username && (
+                  <FormErrorMessage>{formik.errors.username}</FormErrorMessage>
+                )}
               </FormControl>
               <FormControl
                 isRequired
@@ -149,6 +165,7 @@ const SignUp = () => {
                   type="email"
                   rounded={"lg"}
                   onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   value={formik.values.email}
                 />
                 {formik.touched.email && formik.errors.email && (
@@ -157,7 +174,7 @@ const SignUp = () => {
               </FormControl>
               <FormControl
                 isRequired
-                isInvalid={formik.touched.password && formik.errors.password}
+                isInvalid={formik.touched.phone && formik.errors.phone}
               >
                 <FormLabel mt={4}>Phone Number</FormLabel>
                 <Input
@@ -166,6 +183,7 @@ const SignUp = () => {
                   type="tel"
                   rounded={"lg"}
                   onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   value={formik.values.phone}
                 />
                 {formik.touched.phone && formik.errors.phone && (
@@ -188,14 +206,11 @@ const SignUp = () => {
                   }}
                   rounded={"lg"}
                   onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   value={formik.values.password}
                 />
-                {/* <ErrorMessage name="password" component={FormHelperText}></ErrorMessage> */}
                 {formik.touched.password && formik.errors.password && (
-                  <ErrorMessage
-                    name="password"
-                    component={FormHelperText}
-                  ></ErrorMessage>
+                  <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
                 )}
               </FormControl>
               <FormControl
@@ -212,6 +227,7 @@ const SignUp = () => {
                   type="password"
                   rounded={"lg"}
                   onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   value={formik.values.confirmPassword}
                 />
                 {formik.touched.confirmPassword &&
@@ -241,7 +257,6 @@ const SignUp = () => {
                 bgColor={"#9D4EDD"}
                 _hover={{ bgColor: "#B75CFF" }}
                 _active={{ bgColor: "#6C12B5" }}
-                onClick={() => register()}
               >
                 Create Account
               </Button>
