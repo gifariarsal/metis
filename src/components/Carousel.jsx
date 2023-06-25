@@ -47,7 +47,7 @@ export default function CaptionCarousel() {
   }, []);
 
   const sortedArticlesData = articles.sort(
-    (a, b) => new Date(b.date) - new Date(a.date)
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
 
   const limitedArticlesData = sortedArticlesData.slice(0, 4);
@@ -83,6 +83,7 @@ export default function CaptionCarousel() {
         left={side}
         top={top}
         transform={"translate(-50%, -50%)"}
+        rounded={"full"}
         zIndex={2}
         onClick={() => slider?.slickPrev()}
       >
@@ -96,6 +97,7 @@ export default function CaptionCarousel() {
         right={side}
         top={top}
         transform={"translate(50%, -50%)"}
+        rounded={"full"}
         zIndex={2}
         onClick={() => slider?.slickNext()}
       >
@@ -106,7 +108,6 @@ export default function CaptionCarousel() {
         {limitedArticlesData.map((article) => (
           <Box
             key={article.id}
-            height={"6xl"}
             position="relative"
             backgroundPosition="center"
             backgroundRepeat="no-repeat"
@@ -114,13 +115,17 @@ export default function CaptionCarousel() {
             backgroundImage={`https://minpro-blog.purwadhikabootcamp.com/${article.imageURL}`}
           >
             {/* This is the block you need to change, to customize the caption */}
-            <Container size="container.lg" height="600px" position="relative">
+            <Container
+              size="container.lg"
+              height="400px"
+              position="relative"
+            >
               <Stack
                 spacing={6}
                 w={"full"}
                 maxW={"lg"}
                 position="absolute"
-                top="50%"
+                top="80%"
                 transform="translate(0, -50%)"
               >
                 <Heading fontSize={"4xl"}>{article.title}</Heading>

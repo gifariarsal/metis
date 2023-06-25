@@ -20,7 +20,7 @@ import { HiOutlinePencilSquare } from "react-icons/hi2";
 import { useDispatch } from "react-redux";
 import { logoutSuccess } from "../redux/reducer/AuthReducer";
 
-const NavbarNonUser = () => {
+const Navbar = () => {
   const login = localStorage.getItem("token");
 
   const navigate = useNavigate();
@@ -161,4 +161,4 @@ const NavbarNonUser = () => {
   );
 };
 
-export default NavbarNonUser;
+export default Navbar;

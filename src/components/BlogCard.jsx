@@ -4,14 +4,13 @@ import {
   Card,
   CardBody,
   CardFooter,
-  Flex,
   Heading,
   IconButton,
-  Image,
   Stack,
-  Tag,
   Text,
   Grid,
+  Tag,
+  Flex,
 } from "@chakra-ui/react";
 import { BsBookmarkPlus } from "react-icons/bs";
 import React, { useEffect, useState } from "react";
@@ -28,7 +27,7 @@ const BlogCard = () => {
       const response = await axios.get(
         "https://minpro-blog.purwadhikabootcamp.com/api/blog?id_cat=3&sort=ASC&page=1"
       );
-      console.log(response.data);
+      // console.log(response.data);
       setArticles(response.data.result);
     } catch (error) {
       console.log(error);
@@ -39,8 +38,14 @@ const BlogCard = () => {
     fetchData();
   }, []);
 
+  const sortedArticlesData = articles.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
+
   const handleNextPage = () => {
-    setActivePage((prevPage) => prevPage + 1);
+    const totalPages = Math.ceil(articles.length / 3);
+    if (activePage < totalPages && activePage < 3)
+      setActivePage((prevPage) => prevPage + 1);
   };
 
   const handlePrevPage = () => {
@@ -54,7 +59,7 @@ const BlogCard = () => {
       <Button
         key={index}
         onClick={() => setActivePage(index)}
-        colorScheme={activePage === index ? "blue" : "gray"}
+        colorScheme={activePage === index ? "blackAlpha" : "gray"}
         mx={1}
         size="sm"
       >
@@ -76,12 +81,12 @@ const BlogCard = () => {
   return (
     <Box mt={4}>
       <Swiper slidesPerView={3}>
-        <Grid templateColumns="repeat(3, 1fr)" gap={4}>
-          {articles
+        <Flex justifyContent={"space-between"} gap={4}>
+          {sortedArticlesData
             .slice((activePage - 1) * 3, activePage * 3)
             .map((article) => (
               <SwiperSlide key={article.id}>
-                <Card maxW="xs" minH={"xs"}>
+                <Card maxW="xs" h={"400px"}>
                   <CardBody>
                     <Box
                       height={"100px"}
@@ -93,11 +98,28 @@ const BlogCard = () => {
                       backgroundImage={`https://minpro-blog.purwadhikabootcamp.com/${article.imageURL}`}
                     ></Box>
                     <Stack mt="6" spacing="3">
-                      <Heading size="md">{article.title}</Heading>
+                      <Heading size="md" noOfLines={1}>
+                        {article.title}
+                      </Heading>
                       <Text noOfLines={2}>{article.content}</Text>
+                      <Text fontSize={"sm"} color={"gray.500"}>
+                        {article.User.username}
+                      </Text>
+                      <Text fontSize={"sm"} color={"gray.500"}>
+                        Published:{" "}
+                        {new Date(article.createdAt).toLocaleDateString()}
+                      </Text>
                     </Stack>
+                    <Tag
+                      size={"md"}
+                      rounded={"full"}
+                      mt={4}
+                      fontWeight={"normal"}
+                    >
+                      {article.Category.name}
+                    </Tag>
                   </CardBody>
-                  <CardFooter>
+                  <CardFooter mt={"-4"}>
                     <IconButton
                       bgColor={"white"}
                       color={"black"}
@@ -113,11 +135,12 @@ const BlogCard = () => {
                 </Card>
               </SwiperSlide>
             ))}
-        </Grid>
+        </Flex>
       </Swiper>
       <Box display="flex" justifyContent="center" mt={4}>
         <Button
-          colorScheme="blue"
+          size={"sm"}
+          colorScheme="blackAlpha"
           onClick={handlePrevPage}
           disabled={activePage === 1}
         >
@@ -125,7 +148,8 @@ const BlogCard = () => {
         </Button>
         {renderArticleIndexes()}
         <Button
-          colorScheme="blue"
+        size={"sm"}
+          colorScheme="blackAlpha"
           onClick={handleNextPage}
           disabled={activePage === Math.ceil(articles.length / 3)}
         >
@@ -137,54 +161,3 @@ const BlogCard = () => {
 };
 
 export default BlogCard;
-
-{
-  /* <Card
-  direction={"row"}
-  overflow="hidden"
-  variant="outline"
-  rounded={"xl"}
-  size={"sm"}
->
-  <Stack>
-    <CardBody>
-      <Flex mb={"2"} gap={10}>
-        <Text fontSize={"sm"} color={"gray.500"}>
-          {article.User.username}
-        </Text>
-        <Text fontSize={"sm"} color={"gray.500"}>
-          Published: {new Date(article.createdAt).toLocaleDateString()}
-        </Text>
-      </Flex>
-      <Heading size="lg" mb={"2"} noOfLines={1} lineHeight={"base"}>
-        {article.title}
-      </Heading>
-
-      <Text noOfLines={2}>{article.content}</Text>
-      <Tag size={"md"} rounded={"full"} mt={4} fontWeight={"normal"}>
-        {article.Category.name}
-      </Tag>
-    </CardBody>
-
-    <CardFooter>
-      <IconButton
-        bgColor={"white"}
-        color={"black"}
-        rounded={"full"}
-        size={"md"}
-        _hover={{
-          bgColor: "gray.100",
-        }}
-        aria-label="Bookmark"
-        icon={<BsBookmarkPlus />}
-      />
-    </CardFooter>
-  </Stack>
-  <Image
-    objectFit="cover"
-    maxW={"40%"}
-    src={`https://minpro-blog.purwadhikabootcamp.com/${article.imageURL}`}
-    alt={article.title}
-  />
-</Card>; */
-}

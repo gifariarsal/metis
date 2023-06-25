@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import BlogCard from "../components/BlogCard";
 import Carousel from "../components/Carousel";
-import { Box, Flex, Grid, GridItem } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 
 const Landing = () => {
   return (

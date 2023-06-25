@@ -12,16 +12,16 @@ import ChangePassword from './pages/ChangePassword';
 function App() {
   return (
     <>
-    <Routes>
-      <Route path='/' element={<Landing />} />
-      <Route path='/sign-in' element={<SignIn />} />
-      <Route path='/sign-up' element={<SignUp />} />
-      <Route path='/user-profile' element={<UserProfile />} />
-      <Route path='/verification/:token' element={<EmailVerification />} />
-      <Route path='/write-blog' element={<WriteBlog />} />
-      <Route path='/reset-password' element={<ResetPassword />} />
-      <Route path='/change-password' element={<ChangePassword />} />
-    </Routes>
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/user-profile" element={<UserProfile />} />
+        <Route path="/verification/:token" element={<EmailVerification />} />
+        <Route path="/write-blog" element={<WriteBlog />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/change-password" element={<ChangePassword />} />
+      </Routes>
     </>
   );
 }

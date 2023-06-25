@@ -66,7 +66,8 @@ const SignIn = () => {
   // validation
   const LoginSchema = Yup.object().shape({
     email: Yup.string()
-      .email("Invalid email address format"),
+      .email("Invalid email address format")
+      .required("Email is required"),
     password: Yup.string()
       .required("Password is required"),
   });
@@ -86,9 +87,9 @@ const SignIn = () => {
   });
 
   return (
-    <div>
+    <Box>
       <Flex>
-        <Box w={"40%"} bgColor={"#E0AAFF"}>
+        <Box w={"40%"} h={"100vh"} bgColor={"#E0AAFF"}>
           <Link to={"/"}>
             <Image
               src={SideLogo}
@@ -149,76 +150,62 @@ const SignIn = () => {
             <Box w={"full"}>
               <form onSubmit={formik.handleSubmit}>
                 <FormControl
-                  isInvalid={formik.touched.username && formik.errors.username}
-                >
-                  <FormLabel>Username</FormLabel>
-                  <Input
-                    id="username"
-                    name="username"
-                    type="text"
-                    rounded={"lg"}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.username}
-                  />
-                  {formik.touched.username && formik.errors.username && (
-                    <FormErrorMessage>
-                      {formik.errors.username}
-                    </FormErrorMessage>
-                  )}
-                </FormControl>
-                <FormControl
                   isInvalid={formik.touched.email && formik.errors.email}
                 >
-                  <FormLabel mt={4}>Email Address</FormLabel>
+                  <FormLabel htmlFor="email">Email Address</FormLabel>
                   <Input
                     id="email"
                     name="email"
                     type="email"
-                    rounded={"lg"}
                     onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
                     value={formik.values.email}
+                    rounded={"lg"}
                   />
                   {formik.touched.email && formik.errors.email && (
                     <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
                   )}
                 </FormControl>
                 <FormControl
-                  isInvalid={formik.touched.phone && formik.errors.phone}
-                >
-                  <FormLabel mt={4}>Phone Number</FormLabel>
-                  <Input
-                    id="phone"
-                    name="phone"
-                    type="tel"
-                    rounded={"lg"}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.phone}
-                  />
-                  {formik.touched.phone && formik.errors.phone && (
-                    <FormErrorMessage>{formik.errors.phone}</FormErrorMessage>
-                  )}
-                </FormControl>
-                <FormControl
                   isInvalid={formik.touched.password && formik.errors.password}
                 >
-                  <FormLabel mt={4}>Password</FormLabel>
-                  <Input
-                    id="password"
-                    name="password"
-                    type="password"
-                    placeholder="6+ chars, min. 1 uppercase and 1 symbol"
-                    _placeholder={{
-                      fontSize: "xs",
-                      color: "gray.500",
-                    }}
-                    rounded={"lg"}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.password}
-                  />
+                  <FormLabel htmlFor="password" mt={"4"}>
+                    <Flex
+                      alignItems={"baseline"}
+                      justifyContent={"space-between"}
+                    >
+                      Password
+                      <Button variant={"link"} onClick={onForgot}>
+                        <Text
+                          fontSize={"xs"}
+                          fontWeight={400}
+                          color={"blue"}
+                          _hover={{ textDecoration: "underline" }}
+                        >
+                          Forgot Password?
+                        </Text>
+                      </Button>
+                    </Flex>
+                  </FormLabel>
+                  <InputGroup>
+                    <Input
+                      id="password"
+                      name="password"
+                      type={show ? "text" : "password"}
+                      rounded={"lg"}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.password}
+                    />
+                    <InputRightElement width="3.5rem">
+                      <Button h="1.75rem" size="sm" onClick={handleClick}>
+                        {show ? (
+                          <IoEyeOffOutline size={"20px"} />
+                        ) : (
+                          <IoEyeOutline size={"20px"} />
+                        )}
+                      </Button>
+                    </InputRightElement>
+                  </InputGroup>
                   {formik.touched.password && formik.errors.password && (
                     <FormErrorMessage>
                       {formik.errors.password}
@@ -245,7 +232,7 @@ const SignIn = () => {
         </Box>
       </Flex>
       <ForgotPassModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
-    </div>
+    </Box>
   );
 };
 

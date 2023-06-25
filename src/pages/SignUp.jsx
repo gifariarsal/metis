@@ -5,7 +5,6 @@ import {
   Flex,
   FormControl,
   FormErrorMessage,
-  FormHelperText,
   FormLabel,
   Image,
   Input,
@@ -14,7 +13,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import SideLogo from "../assets/logo_purple.png";
-import { ErrorMessage, useFormik } from "formik";
+import { useFormik } from "formik";
 import axios from "axios";
 import * as Yup from "yup";
 import React from "react";
