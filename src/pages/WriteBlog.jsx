@@ -9,13 +9,33 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "./WriteBlog.css";
 import TagsInput from "react-tagsinput";
 import "react-tagsinput/react-tagsinput.css";
+import { useNavigate } from "react-router-dom";
+
+function withAuth(Component) {
+  return function WrappedComponent(props) {
+    const login = localStorage.getItem("token");
+    const navigate = useNavigate();
+
+    useEffect(() => {
+      if (!login) {
+        navigate("/sign-in");
+      }
+    }, [login, navigate]);
+
+    if (!login) {
+      return null; // or any other placeholder while checking authentication
+    }
+
+    return <Component {...props} />;
+  };
+}
 
 const WriteBlog = () => {
   //set date published to current date
@@ -177,4 +197,4 @@ const WriteBlog = () => {
   );
 };
 
-export default WriteBlog;
+export default withAuth(WriteBlog);

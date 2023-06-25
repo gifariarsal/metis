@@ -103,12 +103,12 @@ const NavbarNonUser = () => {
                       />
                     </MenuButton>
                     <MenuList>
-                      <MenuItem>
-                        <Link to={"/user-profile"}>Profile</Link>
-                      </MenuItem>
-                      <MenuItem>
-                        <Link to={"/change-password"}>Change Password</Link>
-                      </MenuItem>
+                      <Link to={"/user-profile"}>
+                        <MenuItem>Profile</MenuItem>
+                      </Link>
+                      <Link to={"/change-password"}>
+                        <MenuItem>Change Password</MenuItem>
+                      </Link>
                       <MenuDivider />
                       <MenuItem color={"red"}>
                         <Button

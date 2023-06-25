@@ -18,9 +18,10 @@ import { ErrorMessage, useFormik } from "formik";
 import axios from "axios";
 import * as Yup from "yup";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const toast = useToast();
   const register = async (values) => {
     try {
@@ -32,6 +33,7 @@ const SignUp = () => {
           phone: values.phone,
           password: values.password,
           confirmPassword: values.confirmPassword,
+          FE_URL: "http://localhost:3000"
         }
       );
       toast({
@@ -40,6 +42,7 @@ const SignUp = () => {
         duration: "2000",
         isClosable: true,
       });
+      navigate("/")
     } catch (err) {
       toast({
         title: "Register Failed",
