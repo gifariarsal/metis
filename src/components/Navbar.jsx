@@ -59,9 +59,11 @@ const Navbar = () => {
                 focusBorderColor="#C77DFF"
                 w={"auto"}
               />
-              <Text size={"md"} ml={4}>
-                Filter
-              </Text>
+              <Link to={"/top10"}>
+              <Button size={"sm"} ml={4}>
+                Top 10 Articles
+              </Button>
+              </Link>
             </Flex>
           </Box>
           <Box w={"50%"} m={"16px 60px"}>
@@ -153,7 +155,6 @@ const Navbar = () => {
                 </Box>
               )}
             </Flex>
-            {/* {login !== null ? (<NavUser />):(<NavNonUser />)} */}
           </Box>
         </Flex>
       </Box>

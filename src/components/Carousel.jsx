@@ -115,22 +115,23 @@ export default function CaptionCarousel() {
             backgroundImage={`https://minpro-blog.purwadhikabootcamp.com/${article.imageURL}`}
           >
             {/* This is the block you need to change, to customize the caption */}
-            <Container
-              size="container.lg"
-              height="400px"
-              position="relative"
-            >
+            <Container width="full" height="400px" position="relative">
               <Stack
                 spacing={6}
                 w={"full"}
                 maxW={"lg"}
                 position="absolute"
-                top="80%"
+                px={10}
+                py={2}
+                top="87%"
                 transform="translate(0, -50%)"
+                bg={"rgba(0, 0, 0, 0.6)"}
+                color={"white"}
+
               >
-                <Heading fontSize={"4xl"}>{article.title}</Heading>
-                <Text fontSize={"md"} color="GrayText" noOfLines={2}>
-                  {article.content}
+                <Heading fontSize={"4xl"} noOfLines={1}>{article.title}</Heading>
+                <Text fontSize={"md"}>
+                  {article.User.username}
                 </Text>
               </Stack>
             </Container>

@@ -52,6 +52,7 @@ const ForgotPassModal = ({ isOpen, onClose }) => {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       forgotPass(values);
+      onClose();
       // navigate()
     },
   });

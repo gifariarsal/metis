@@ -8,17 +8,18 @@ import {
   InputRightElement,
   Text,
   VStack,
-  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import * as Yup from "yup";
 import React from "react";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import { useFormik } from "formik";
+import { useNavigate } from "react-router-dom";
 
 const ResetPassword = () => {
   const url = window.location.href.split("/");
   const token = url[url.length - 1];
+  const navigate = useNavigate();
 
   const resetPasswordSchema = Yup.object().shape({
     password: Yup.string()
@@ -62,7 +63,7 @@ const ResetPassword = () => {
     validationSchema: resetPasswordSchema,
     onSubmit: (values) => {
       resetPass(values);
-      // navigate()
+      navigate("/sign-in")
     },
   });
 

@@ -7,6 +7,7 @@ import EmailVerification from './pages/EmailVerification';
 import WriteBlog from './pages/WriteBlog';
 import ResetPassword from './pages/ResetPassword';
 import ChangePassword from './pages/ChangePassword';
+import Top10 from './pages/Top10';
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<Landing />} />
+        <Route path="/top10" element={<Top10 />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/user-profile" element={<UserProfile />} />
