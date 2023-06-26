@@ -67,7 +67,7 @@ const SignIn = () => {
   const LoginSchema = Yup.object().shape({
     email: Yup.string()
       .email("Invalid email address format")
-      .required("Email is required"),
+      .required("This field is required"),
     password: Yup.string()
       .required("Password is required"),
   });
@@ -152,14 +152,15 @@ const SignIn = () => {
                 <FormControl
                   isInvalid={formik.touched.email && formik.errors.email}
                 >
-                  <FormLabel htmlFor="email">Email Address</FormLabel>
+                  <FormLabel htmlFor="email">Username, email, or phone number</FormLabel>
                   <Input
                     id="email"
                     name="email"
                     type="email"
-                    onChange={formik.handleChange}
-                    value={formik.values.email}
                     rounded={"lg"}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.email}
                   />
                   {formik.touched.email && formik.errors.email && (
                     <FormErrorMessage>{formik.errors.email}</FormErrorMessage>

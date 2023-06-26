@@ -9,9 +9,29 @@ import {
   TabPanels,
   Tabs,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 import ProfileDetail from "../components/ProfileDetail";
 import Navbar from "../components/Navbar";
+import { useNavigate } from "react-router-dom";
+
+function withAuth(Component) {
+  return function WrappedComponent(props) {
+    const login = localStorage.getItem("token");
+    const navigate = useNavigate();
+
+    useEffect(() => {
+      if (!login) {
+        navigate("/sign-in");
+      }
+    }, [login, navigate]);
+
+    if (!login) {
+      return null; // or any other placeholder while checking authentication
+    }
+
+    return <Component {...props} />;
+  };
+}
 
 const UserProfile = () => {
   return (
@@ -57,4 +77,4 @@ const UserProfile = () => {
   );
 };
 
-export default UserProfile;
+export default withAuth(UserProfile);

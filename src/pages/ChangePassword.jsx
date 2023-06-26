@@ -44,84 +44,86 @@ const ChangePassword = () => {
       h={"100vh"}
     >
       <Box boxShadow={"lg"} rounded={"2xl"} w={"30vw"}>
-        <VStack px={10} py={10} gap={6} w={"full"}>
-          <Text fontSize={"xl"} fontWeight={700}>
-            Change Password
-          </Text>
-          <FormControl mb={4} w={"100%"} isRequired>
-            <FormLabel>Old Password</FormLabel>
-            <InputGroup>
-              <Input
-                id="password"
-                name="password"
-                type={showOld ? "text" : "password"}
-                rounded={"lg"}
-              />
-              <InputRightElement width="3.5rem">
-                <Button h="1.75rem" size="sm" onClick={handleClickOld}>
-                  {showOld ? (
-                    <IoEyeOffOutline size={"20px"} />
-                  ) : (
-                    <IoEyeOutline size={"20px"} />
-                  )}
-                </Button>
-              </InputRightElement>
-            </InputGroup>
-          </FormControl>
-          <FormControl mb={4} w={"100%"} isRequired>
-            <FormLabel>New Password</FormLabel>
-            <InputGroup>
-              <Input
-                id="newPassword"
-                name="newPassword"
-                type={showNew ? "text" : "password"}
-                rounded={"lg"}
-              />
-              <InputRightElement width="3.5rem">
-                <Button h="1.75rem" size="sm" onClick={handleClickNew}>
-                  {showNew ? (
-                    <IoEyeOffOutline size={"20px"} />
-                  ) : (
-                    <IoEyeOutline size={"20px"} />
-                  )}
-                </Button>
-              </InputRightElement>
-            </InputGroup>
-          </FormControl>
-          <FormControl isRequired>
-            <FormLabel>Confirm New Password</FormLabel>
-            <InputGroup>
-              <Input
-                id="confirmPassword"
-                name="confirmPassword"
-                type={showConfirm ? "text" : "password"}
-                rounded={"lg"}
-              />
-              <InputRightElement width="3.5rem">
-                <Button h="1.75rem" size="sm" onClick={handleClickConfirm}>
-                  {showConfirm ? (
-                    <IoEyeOffOutline size={"20px"} />
-                  ) : (
-                    <IoEyeOutline size={"20px"} />
-                  )}
-                </Button>
-              </InputRightElement>
-            </InputGroup>
-          </FormControl>
-          <Button
-            display={"flex"}
-            justifyContent={"center"}
-            w={"100%"}
-            mt={"6"}
-            rounded={"lg"}
-            color={"white"}
-            bgColor={"#9D4EDD"}
-            _hover={{ bgColor: "#B75CFF" }}
-            _active={{ bgColor: "#6C12B5" }}
-          >
-            Save Password
-          </Button>
-        </VStack>
+        <form>
+          <VStack px={10} py={10} gap={6} w={"full"}>
+            <Text fontSize={"xl"} fontWeight={700}>
+              Change Password
+            </Text>
+            <FormControl mb={4} w={"100%"} isRequired>
+              <FormLabel>Old Password</FormLabel>
+              <InputGroup>
+                <Input
+                  id="password"
+                  name="password"
+                  type={showOld ? "text" : "password"}
+                  rounded={"lg"}
+                />
+                <InputRightElement width="3.5rem">
+                  <Button h="1.75rem" size="sm" onClick={handleClickOld}>
+                    {showOld ? (
+                      <IoEyeOffOutline size={"20px"} />
+                    ) : (
+                      <IoEyeOutline size={"20px"} />
+                    )}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+            </FormControl>
+            <FormControl mb={4} w={"100%"} isRequired>
+              <FormLabel>New Password</FormLabel>
+              <InputGroup>
+                <Input
+                  id="newPassword"
+                  name="newPassword"
+                  type={showNew ? "text" : "password"}
+                  rounded={"lg"}
+                />
+                <InputRightElement width="3.5rem">
+                  <Button h="1.75rem" size="sm" onClick={handleClickNew}>
+                    {showNew ? (
+                      <IoEyeOffOutline size={"20px"} />
+                    ) : (
+                      <IoEyeOutline size={"20px"} />
+                    )}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+            </FormControl>
+            <FormControl isRequired>
+              <FormLabel>Confirm New Password</FormLabel>
+              <InputGroup>
+                <Input
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type={showConfirm ? "text" : "password"}
+                  rounded={"lg"}
+                />
+                <InputRightElement width="3.5rem">
+                  <Button h="1.75rem" size="sm" onClick={handleClickConfirm}>
+                    {showConfirm ? (
+                      <IoEyeOffOutline size={"20px"} />
+                    ) : (
+                      <IoEyeOutline size={"20px"} />
+                    )}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+            </FormControl>
+            <Button
+              display={"flex"}
+              justifyContent={"center"}
+              w={"100%"}
+              mt={"6"}
+              rounded={"lg"}
+              color={"white"}
+              bgColor={"#9D4EDD"}
+              _hover={{ bgColor: "#B75CFF" }}
+              _active={{ bgColor: "#6C12B5" }}
+            >
+              Save Password
+            </Button>
+          </VStack>
+        </form>
       </Box>
     </Box>
   );

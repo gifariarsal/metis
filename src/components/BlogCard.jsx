@@ -8,7 +8,6 @@ import {
   IconButton,
   Stack,
   Text,
-  Grid,
   Tag,
   Flex,
 } from "@chakra-ui/react";
@@ -25,8 +24,9 @@ const BlogCard = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "https://minpro-blog.purwadhikabootcamp.com/api/blog?id_cat=3&sort=ASC&page=1"
+        "https://minpro-blog.purwadhikabootcamp.com/api/blog"
       );
+      console.log(response.data);
       // console.log(response.data);
       setArticles(response.data.result);
     } catch (error) {
@@ -81,61 +81,61 @@ const BlogCard = () => {
   return (
     <Box mt={4}>
       <Swiper slidesPerView={3}>
-        <Flex justifyContent={"space-between"} gap={4}>
-          {sortedArticlesData
-            .slice((activePage - 1) * 3, activePage * 3)
-            .map((article) => (
-              <SwiperSlide key={article.id}>
-                <Card maxW="xs" h={"400px"}>
-                  <CardBody>
-                    <Box
-                      height={"100px"}
-                      position="relative"
-                      backgroundPosition="center"
-                      backgroundRepeat="no-repeat"
-                      backgroundSize="cover"
-                      borderRadius="lg"
-                      backgroundImage={`https://minpro-blog.purwadhikabootcamp.com/${article.imageURL}`}
-                    ></Box>
-                    <Stack mt="6" spacing="3">
-                      <Heading size="md" noOfLines={1}>
-                        {article.title}
-                      </Heading>
-                      <Text noOfLines={2}>{article.content}</Text>
-                      <Text fontSize={"sm"} color={"gray.500"}>
-                        {article.User.username}
-                      </Text>
-                      <Text fontSize={"sm"} color={"gray.500"}>
-                        Published:{" "}
-                        {new Date(article.createdAt).toLocaleDateString()}
-                      </Text>
-                    </Stack>
-                    <Tag
-                      size={"md"}
-                      rounded={"full"}
-                      mt={4}
-                      fontWeight={"normal"}
-                    >
-                      {article.Category.name}
-                    </Tag>
-                  </CardBody>
-                  <CardFooter mt={"-4"}>
-                    <IconButton
-                      bgColor={"white"}
-                      color={"black"}
-                      rounded={"full"}
-                      size={"md"}
-                      _hover={{
-                        bgColor: "gray.100",
-                      }}
-                      aria-label="Bookmark"
-                      icon={<BsBookmarkPlus />}
-                    />
-                  </CardFooter>
-                </Card>
-              </SwiperSlide>
-            ))}
-        </Flex>
+        {sortedArticlesData
+          .slice((activePage - 1) * 3, activePage * 3)
+          .map((article) => (
+            <SwiperSlide key={article.id}>
+              <Box display={"flex"} justifyContent={"space-between"} p={4}>
+                  <Card w={"full"} h={"430px"}>
+                    <CardBody>
+                      <Box
+                        height={"100px"}
+                        position="relative"
+                        backgroundPosition="center"
+                        backgroundRepeat="no-repeat"
+                        backgroundSize="cover"
+                        borderRadius="lg"
+                        backgroundImage={`https://minpro-blog.purwadhikabootcamp.com/${article.imageURL}`}
+                      ></Box>
+                      <Stack mt="6" spacing="3">
+                        <Heading size="md" noOfLines={1}>
+                          {article.title}
+                        </Heading>
+                        <Text noOfLines={2}>{article.content}</Text>
+                        <Text fontSize={"sm"} color={"gray.500"}>
+                          {article.User.username}
+                        </Text>
+                        <Text fontSize={"sm"} color={"gray.500"}>
+                          Published:{" "}
+                          {new Date(article.createdAt).toLocaleDateString()}
+                        </Text>
+                      </Stack>
+                      <Tag
+                        size={"md"}
+                        rounded={"full"}
+                        mt={4}
+                        fontWeight={"normal"}
+                      >
+                        {article.Category.name}
+                      </Tag>
+                    </CardBody>
+                    <CardFooter mt={"-4"}>
+                      <IconButton
+                        bgColor={"white"}
+                        color={"black"}
+                        rounded={"full"}
+                        size={"md"}
+                        _hover={{
+                          bgColor: "gray.100",
+                        }}
+                        aria-label="Bookmark"
+                        icon={<BsBookmarkPlus />}
+                      />
+                    </CardFooter>
+                  </Card>
+              </Box>
+            </SwiperSlide>
+          ))}
       </Swiper>
       <Box display="flex" justifyContent="center" mt={4}>
         <Button
@@ -148,7 +148,7 @@ const BlogCard = () => {
         </Button>
         {renderArticleIndexes()}
         <Button
-        size={"sm"}
+          size={"sm"}
           colorScheme="blackAlpha"
           onClick={handleNextPage}
           disabled={activePage === Math.ceil(articles.length / 3)}

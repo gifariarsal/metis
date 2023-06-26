@@ -8,6 +8,7 @@ import {
   IconButton,
   Image,
   Stack,
+  Tag,
   Text,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
@@ -61,7 +62,7 @@ const Top10 = () => {
               overflow="hidden"
               variant="outline"
               rounded={"xl"}
-              h={"200px"}
+              h={"270px"}
             >
               <Box w={"70%"}>
                 <Stack>
@@ -80,6 +81,14 @@ const Top10 = () => {
                     </Heading>
 
                     <Text noOfLines={2}>{article.content}</Text>
+                    <Tag
+                      size={"md"}
+                      rounded={"full"}
+                      mt={4}
+                      fontWeight={"normal"}
+                    >
+                      {article.Category.name}
+                    </Tag>
                   </CardBody>
 
                   <CardFooter>

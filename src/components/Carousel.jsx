@@ -34,7 +34,7 @@ export default function CaptionCarousel() {
   const fetchArticles = async () => {
     try {
       const response = await axios.get(
-        "https://minpro-blog.purwadhikabootcamp.com/api/blog?id_cat=3&sort=ASC&page=1"
+        "https://minpro-blog.purwadhikabootcamp.com/api/blog"
       );
       setArticles(response.data.result);
     } catch (error) {
@@ -60,8 +60,9 @@ export default function CaptionCarousel() {
       position={"relative"}
       height={"400px"}
       width={"full"}
-      rounded={"lg"}
+      rounded={"xl"}
       overflow={"hidden"}
+      boxShadow={"xl"}
     >
       {/* CSS files for react-slick */}
       <link

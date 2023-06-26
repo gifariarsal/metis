@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Input,
   InputGroup,
@@ -25,7 +26,7 @@ const ResetPassword = () => {
     password: Yup.string()
       .matches(
         /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()])[A-Za-z\d!@#$%^&*()]{6,}$/,
-        "Password must contain at least 6 characters, 1 symbol, and 1 uppercase"
+        "Password must be at least 6 characters, 1 symbol, and 1 uppercase"
       )
       .required("Password is required"),
     confirmPassword: Yup.string()
@@ -40,18 +41,14 @@ const ResetPassword = () => {
         values,
         {
           headers: {
-            Authorization: `Bearer ${token}`, // Replace with your actual token
+            Authorization: `Bearer ${token}`,
           },
         }
       );
 
-      // Handle success response
-      console.log(res);
-      // Show a success message or close the modal
+      // console.log(res);
     } catch (error) {
-      // Handle error response
       console.error("Error", error);
-      // Show an error message to the user
     }
   };
 
@@ -63,7 +60,7 @@ const ResetPassword = () => {
     validationSchema: resetPasswordSchema,
     onSubmit: (values) => {
       resetPass(values);
-      navigate("/sign-in")
+      navigate("/sign-in");
     },
   });
 
@@ -80,19 +77,19 @@ const ResetPassword = () => {
       alignItems={"center"}
       h={"100vh"}
     >
-      <Box boxShadow={"lg"} rounded={"2xl"} w={"40vw"}>
-        <VStack px={10} py={10} gap={6} w={"full"}>
-          <Text fontSize={"xl"} fontWeight={700}>
-            Reset Password
-          </Text>
-          <form onSubmit={formik.handleSubmit}>
+      <Box boxShadow={"lg"} rounded={"2xl"} h={"70%"} w={"40vw"}>
+        <form onSubmit={formik.handleSubmit}>
+          <VStack px={10} py={10} w={"full"}>
+            <Text fontSize={"xl"} fontWeight={700}>
+              Reset Password
+            </Text>
             <FormControl
               mb={4}
               w={"100%"}
               isRequired
               isInvalid={formik.touched.password && formik.errors.password}
             >
-              <FormLabel>New Password</FormLabel>
+              <FormLabel mt={4}>New Password</FormLabel>
               <InputGroup>
                 <Input
                   id="password"
@@ -100,6 +97,7 @@ const ResetPassword = () => {
                   rounded={"lg"}
                   type={showConfirm ? "text" : "password"}
                   onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   value={formik.values.password}
                 />
                 <InputRightElement width="3.5rem">
@@ -112,6 +110,11 @@ const ResetPassword = () => {
                   </Button>
                 </InputRightElement>
               </InputGroup>
+              {formik.touched.password && formik.errors.password && (
+                <FormErrorMessage fontSize={"xs"}>
+                  {formik.errors.password}
+                </FormErrorMessage>
+              )}
             </FormControl>
             <FormControl
               isRequired
@@ -127,6 +130,7 @@ const ResetPassword = () => {
                   rounded={"lg"}
                   type={showConfirm ? "text" : "password"}
                   onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   value={formik.values.confirmPassword}
                 />
                 <InputRightElement width="3.5rem">
@@ -139,6 +143,11 @@ const ResetPassword = () => {
                   </Button>
                 </InputRightElement>
               </InputGroup>
+              {formik.touched.password && formik.errors.confirmPassword && (
+                <FormErrorMessage fontSize={"xs"}>
+                  {formik.errors.confirmPassword}
+                </FormErrorMessage>
+              )}
             </FormControl>
             <Button
               type="submit"
@@ -154,8 +163,8 @@ const ResetPassword = () => {
             >
               Save Password
             </Button>
-          </form>
-        </VStack>
+          </VStack>
+        </form>
       </Box>
     </Box>
   );

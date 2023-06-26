@@ -1,6 +1,7 @@
 import {
   Button,
   FormControl,
+  FormErrorMessage,
   Input,
   Modal,
   ModalBody,
@@ -35,13 +36,9 @@ const ForgotPassModal = ({ isOpen, onClose }) => {
         }
       );
 
-      // Handle success response
       console.log("Password reset email sent successfully");
-      // Show a success message or close the modal
     } catch (error) {
-      // Handle error response
       console.error("Error sending password reset email:", error);
-      // Show an error message to the user
     }
   };
 
@@ -53,7 +50,6 @@ const ForgotPassModal = ({ isOpen, onClose }) => {
     onSubmit: (values) => {
       forgotPass(values);
       onClose();
-      // navigate()
     },
   });
 
@@ -75,19 +71,24 @@ const ForgotPassModal = ({ isOpen, onClose }) => {
             </Text>
 
             <FormControl
+              isRequired
               isInvalid={formik.touched.email && formik.errors.email}
             >
               <Input
                 id="email"
                 name="email"
                 type="email"
-                onChange={formik.handleChange}
-                value={formik.values.email}
                 rounded={"lg"}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.email}
                 focusBorderColor="#C77DFF"
                 placeholder="yours@email.com"
                 _placeholder={{ fontSize: "sm", color: "gray.400" }}
               />
+              {formik.touched.email && formik.errors.email && (
+                <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
+              )}
             </FormControl>
           </ModalBody>
 

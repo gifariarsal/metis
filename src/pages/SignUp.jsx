@@ -64,7 +64,7 @@ const SignUp = () => {
     password: Yup.string()
       .matches(
         /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()])[A-Za-z\d!@#$%^&*()]{6,}$/,
-        "Password must contain at least 6 characters, 1 symbol, and 1 uppercase"
+        "Password must be at least 6 characters, 1 symbol, and 1 uppercase"
       )
       .required("Password is required"),
     confirmPassword: Yup.string()

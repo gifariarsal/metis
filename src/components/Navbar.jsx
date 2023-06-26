@@ -51,14 +51,11 @@ const Navbar = () => {
                   _hover={{ filter: "brightness(150%)", transition: "300ms" }}
                 ></Image>
               </Link>
-              <Input
-                ml={4}
-                placeholder="Search..."
-                _placeholder={{ fontSize: "sm", color: "gray.400" }}
-                rounded={"xl"}
-                focusBorderColor="#C77DFF"
-                w={"auto"}
-              />
+              <Link to={"/explore"}>
+              <Button size={"sm"} ml={10}>
+                Explore
+              </Button>
+              </Link>
               <Link to={"/top10"}>
               <Button size={"sm"} ml={4}>
                 Top 10 Articles
