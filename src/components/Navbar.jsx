@@ -67,7 +67,6 @@ const Navbar = () => {
             <Flex justifyContent={"flex-end"}>
               <Link to={"/write-blog"}>
                 <Button
-                  mr={10}
                   display={"inline-flex"}
                   fontSize={"sm"}
                   fontWeight={600}
@@ -85,7 +84,7 @@ const Navbar = () => {
                 </Button>
               </Link>
               {login ? (
-                <Flex alignItems={"center"}>
+                <Flex alignItems={"center"} ml={10}>
                   <Menu>
                     <MenuButton
                       as={Button}
@@ -122,7 +121,7 @@ const Navbar = () => {
                   </Menu>
                 </Flex>
               ) : (
-                <Box>
+                <Box ml={10}>
                   <Stack direction={"row"} spacing={6} ml={4}>
                     <Button
                       as={"a"}

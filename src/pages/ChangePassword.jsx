@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Input,
   InputGroup,
@@ -13,8 +14,17 @@ import React from "react";
 import axios from "axios";
 import * as Yup from "yup";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
 
 const ChangePassword = () => {
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1);
+  };
+
   const [showOld, setShowOld] = React.useState(false);
   const handleClickOld = () => setShowOld(!showOld);
 
@@ -24,16 +34,48 @@ const ChangePassword = () => {
   const [showConfirm, setShowConfirm] = React.useState(false);
   const handleClickConfirm = () => setShowConfirm(!showConfirm);
 
+  const changePassword = async (values) => {
+    try {
+      const res = await axios.patch(
+        "https://minpro-blog.purwadhikabootcamp.com/api/auth/changePass",
+        values,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // console.log(res);
+    } catch (error) {
+      console.error("Error", error);
+    }
+  };
+
   const ChangePasswordSchema = Yup.object().shape({
-    newPassword: Yup.string()
+    currentPassword: Yup.string().required("Current Password is required"),
+    password: Yup.string()
       .matches(
         /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()])[A-Za-z\d!@#$%^&*()]{6,}$/,
-        "Password must contain at least 6 characters, 1 symbol, and 1 uppercase"
+        "Password must be at least 6 characters, 1 symbol, and 1 uppercase"
       )
-      .required("Password is required"),
+      .required("New Password is required"),
     confirmPassword: Yup.string()
       .required("Confirm Password is required")
       .oneOf([Yup.ref("password"), null], "Passwords must match"),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      currentPassword: "",
+      password: "",
+      confirmPassword: "",
+    },
+    validationSchema: ChangePasswordSchema,
+    onSubmit: (values) => {
+      changePassword(values);
+      navigate(-1);
+    },
   });
 
   return (
@@ -44,19 +86,27 @@ const ChangePassword = () => {
       h={"100vh"}
     >
       <Box boxShadow={"lg"} rounded={"2xl"} w={"40vw"}>
-        <form>
+        <form onSubmit={formik.handleSubmit}>
           <VStack px={10} py={10} w={"full"}>
             <Text fontSize={"xl"} fontWeight={700} mb={6}>
               Change Password
             </Text>
-            <FormControl mb={4} w={"100%"} isRequired>
-              <FormLabel>Old Password</FormLabel>
+            <FormControl
+              mb={4}
+              w={"100%"}
+              isRequired
+              isInvalid={formik.touched.password && formik.errors.password}
+            >
+              <FormLabel>Current Password</FormLabel>
               <InputGroup>
                 <Input
-                  id="password"
-                  name="password"
-                  type={showOld ? "text" : "password"}
+                  id="currentPassword"
+                  name="currentPassword"
                   rounded={"lg"}
+                  type={showOld ? "text" : "password"}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.currentPassword}
                 />
                 <InputRightElement width="3.5rem">
                   <Button h="1.75rem" size="sm" onClick={handleClickOld}>
@@ -68,15 +118,29 @@ const ChangePassword = () => {
                   </Button>
                 </InputRightElement>
               </InputGroup>
+              {formik.touched.currentPassword &&
+                formik.errors.currentPassword && (
+                  <FormErrorMessage fontSize={"xs"}>
+                    {formik.errors.currentPassword}
+                  </FormErrorMessage>
+                )}
             </FormControl>
-            <FormControl mb={4} w={"100%"} isRequired>
+            <FormControl
+              mb={4}
+              w={"100%"}
+              isRequired
+              isInvalid={formik.touched.password && formik.errors.password}
+            >
               <FormLabel>New Password</FormLabel>
               <InputGroup>
                 <Input
-                  id="newPassword"
-                  name="newPassword"
+                  id="password"
+                  name="password"
                   type={showNew ? "text" : "password"}
                   rounded={"lg"}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.password}
                 />
                 <InputRightElement width="3.5rem">
                   <Button h="1.75rem" size="sm" onClick={handleClickNew}>
@@ -88,8 +152,18 @@ const ChangePassword = () => {
                   </Button>
                 </InputRightElement>
               </InputGroup>
+              {formik.touched.password && formik.errors.password && (
+                <FormErrorMessage fontSize={"xs"}>
+                  {formik.errors.password}
+                </FormErrorMessage>
+              )}
             </FormControl>
-            <FormControl isRequired>
+            <FormControl
+              isRequired
+              isInvalid={
+                formik.touched.confirmPassword && formik.errors.confirmPassword
+              }
+            >
               <FormLabel>Confirm New Password</FormLabel>
               <InputGroup>
                 <Input
@@ -97,6 +171,9 @@ const ChangePassword = () => {
                   name="confirmPassword"
                   type={showConfirm ? "text" : "password"}
                   rounded={"lg"}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.confirmPassword}
                 />
                 <InputRightElement width="3.5rem">
                   <Button h="1.75rem" size="sm" onClick={handleClickConfirm}>
@@ -108,20 +185,30 @@ const ChangePassword = () => {
                   </Button>
                 </InputRightElement>
               </InputGroup>
+              {formik.touched.password && formik.errors.confirmPassword && (
+                <FormErrorMessage fontSize={"xs"}>
+                  {formik.errors.confirmPassword}
+                </FormErrorMessage>
+              )}
             </FormControl>
-            <Button
+            <Box
               display={"flex"}
-              justifyContent={"center"}
-              w={"100%"}
+              justifyContent={"space-between"}
               mt={6}
-              rounded={"lg"}
-              color={"white"}
-              bgColor={"#9D4EDD"}
-              _hover={{ bgColor: "#B75CFF" }}
-              _active={{ bgColor: "#6C12B5" }}
+              w={"full"}
             >
-              Save Password
-            </Button>
+              <Button onClick={goBack}>Cancel</Button>
+              <Button
+                type="submit"
+                rounded={"lg"}
+                color={"white"}
+                bgColor={"#9D4EDD"}
+                _hover={{ bgColor: "#B75CFF" }}
+                _active={{ bgColor: "#6C12B5" }}
+              >
+                Save Password
+              </Button>
+            </Box>
           </VStack>
         </form>
       </Box>
