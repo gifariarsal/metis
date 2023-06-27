@@ -43,14 +43,13 @@ const SignIn = () => {
 
   const login = async (values) => {
     try {
-      const { username, email, phone, password } = values;
       const res = await axios.post(
         "https://minpro-blog.purwadhikabootcamp.com/api/auth/login",
         {
-          username: username,
-          email: email,
-          phone: phone,
-          password: password,
+          username: values.identifier,
+          email: values.identifier,
+          phone: values.identifier,
+          password: values.password,
         }
       );
       console.log(res);
@@ -65,8 +64,7 @@ const SignIn = () => {
 
   // validation
   const LoginSchema = Yup.object().shape({
-    email: Yup.string()
-      .email("Invalid email address format")
+    identifier: Yup.string()
       .required("This field is required"),
     password: Yup.string()
       .required("Password is required"),
@@ -74,9 +72,7 @@ const SignIn = () => {
 
   const formik = useFormik({
     initialValues: {
-      username: "",
-      email: "",
-      phone: "",
+      identifier: "",
       password: "",
     },
     validationSchema: LoginSchema,
@@ -149,20 +145,20 @@ const SignIn = () => {
             <Box w={"full"}>
               <form onSubmit={formik.handleSubmit}>
                 <FormControl
-                  isInvalid={formik.touched.email && formik.errors.email}
+                  isInvalid={formik.touched.identifier && formik.errors.identifier}
                 >
-                  <FormLabel htmlFor="email">Username, email, or phone number</FormLabel>
+                  <FormLabel htmlFor="identifier">Username, email, or phone number</FormLabel>
                   <Input
-                    id="email"
-                    name="email"
-                    type="email"
+                    id="identifier"
+                    name="identifier"
+                    type="text"
                     rounded={"lg"}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    value={formik.values.email}
+                    value={formik.values.identifier}
                   />
-                  {formik.touched.email && formik.errors.email && (
-                    <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
+                  {formik.touched.identifier && formik.errors.identifier && (
+                    <FormErrorMessage>{formik.errors.identifier}</FormErrorMessage>
                   )}
                 </FormControl>
                 <FormControl

@@ -95,7 +95,7 @@ const ChangePassword = () => {
               mb={4}
               w={"100%"}
               isRequired
-              isInvalid={formik.touched.password && formik.errors.password}
+              isInvalid={formik.touched.currentPassword && formik.errors.currentPassword}
             >
               <FormLabel>Current Password</FormLabel>
               <InputGroup>
@@ -185,7 +185,7 @@ const ChangePassword = () => {
                   </Button>
                 </InputRightElement>
               </InputGroup>
-              {formik.touched.password && formik.errors.confirmPassword && (
+              {formik.touched.confirmPassword && formik.errors.confirmPassword && (
                 <FormErrorMessage fontSize={"xs"}>
                   {formik.errors.confirmPassword}
                 </FormErrorMessage>

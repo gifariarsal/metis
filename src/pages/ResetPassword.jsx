@@ -95,7 +95,7 @@ const ResetPassword = () => {
                   id="password"
                   name="password"
                   rounded={"lg"}
-                  type={showConfirm ? "text" : "password"}
+                  type={showNew ? "text" : "password"}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.password}
@@ -143,7 +143,7 @@ const ResetPassword = () => {
                   </Button>
                 </InputRightElement>
               </InputGroup>
-              {formik.touched.password && formik.errors.confirmPassword && (
+              {formik.touched.confirmPassword && formik.errors.confirmPassword && (
                 <FormErrorMessage fontSize={"xs"}>
                   {formik.errors.confirmPassword}
                 </FormErrorMessage>
