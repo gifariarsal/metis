@@ -15,6 +15,7 @@ import React, { useEffect, useState } from "react";
 import { BsBookmarkPlus } from "react-icons/bs";
 import Navbar from "../components/Navbar";
 import axios from "axios";
+import Footer from "../components/Footer";
 
 const Top10 = () => {
   const [articles, setArticles] = useState([]);
@@ -118,6 +119,7 @@ const Top10 = () => {
           ))}
         </Flex>
       </Box>
+      <Footer />
     </Box>
   );
 };

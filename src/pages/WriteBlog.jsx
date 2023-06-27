@@ -127,7 +127,7 @@ const WriteBlog = () => {
         </FormControl>
         <FormControl id="author">
           <FormLabel>Author</FormLabel>
-          <Input type="text" rounded={"lg"} isDisabled />
+          <Input type="text" rounded={"lg"} />
         </FormControl>
         <FormControl id="date">
           <FormLabel>Date Published</FormLabel>
@@ -145,38 +145,60 @@ const WriteBlog = () => {
         </FormControl>
         <FormControl onSubmit={handleSubmitCategory} id="category">
           <FormLabel>Category</FormLabel>
-          <Select value={category} onChange={handleCategoryChange}>
-            <option value="">Select Category</option>
-            <option value="food">Food</option>
-            <option value="travel">Travel</option>
-            <option value="health">Health</option>
-            <option value="education">Education</option>
-            <option value="business">Business</option>
-            <option value="technology">Technology</option>
-            <option value="religion">Religion</option>
-            <option value="gaming">Gaming</option>
-            <option value="other">Other</option>
+          <Select
+            value={category}
+            placeholder="Select category"
+            onChange={handleCategoryChange}
+          >
+            <option value="1">Bisnis</option>
+            <option value="2">Ekonomi</option>
+            <option value="3">Teknologi</option>
+            <option value="4">Olahraga</option>
+            <option value="5">Kuliner</option>
+            <option value="6">Internasional</option>
+            <option value="7">Fiksi</option>
           </Select>
         </FormControl>
         <FormControl id="keyword">
           <FormLabel>Keyword</FormLabel>
           <TagsInput value={keywords} onChange={handleKeywordsChange} />
         </FormControl>
-        <FormControl id="image">
-          <FormLabel>Image</FormLabel>
-          <Input
-            type="file"
-            variant={""}
-            accept=".jpg, .jpeg, png"
-            onChange={handleImageChange}
-          />
-          {previewImage && (
-            <img src={previewImage} alt="Preview" width="200px" />
-          )}
-          <FormHelperText fontSize={"sm"} color={"gray.400"}>
-            Image format should be .jpg, .jpeg, or .png with maximum size is 2 MB
-          </FormHelperText>
-        </FormControl>
+        <Box
+          display={"flex"}
+          justifyContent={"space-between"}
+          alignItems={"center"}
+          w={"full"}
+        >
+          <FormControl id="image">
+            <FormLabel>Image</FormLabel>
+            <Input
+              type="file"
+              variant={""}
+              accept=".jpg, .jpeg, png"
+              onChange={handleImageChange}
+            />
+            {previewImage && (
+              <img src={previewImage} alt="Preview" maxH="200px" />
+            )}
+            <FormHelperText fontSize={"xs"} color={"gray.400"}>
+              Image format should be .jpg, .jpeg, or .png with maximum size is 2
+              MB
+            </FormHelperText>
+          </FormControl>
+          <FormControl id="image">
+            <FormLabel>Video</FormLabel>
+            <Input
+              type="file"
+              variant={""}
+              accept="video/*"
+              // onChange={handleImageChange}
+            />
+            <FormHelperText fontSize={"xs"} color={"gray.400"}>
+              Video's maximum size is 100
+              MB
+            </FormHelperText>
+          </FormControl>
+        </Box>
 
         <Button
           display={"flex"}

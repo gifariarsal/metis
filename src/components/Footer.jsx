@@ -44,16 +44,14 @@ const Footer = () => {
           <Box w={"50%"} m={"16px 60px"}>
             <Stack align={"flex-start"}>
               <Text fontWeight={500}>Stay up to date</Text>
+              <Text fontSize={"xs"} color={"gray.500"}>Subscribe for our newsletter</Text>
               <Stack direction={"row"} spacing={4}>
                 <Input
                   placeholder={"Your email address"}
                   _placeholder={{ fontSize: "sm", color: "gray.400" }}
                   rounded={"xl"}
-                  bg={"whiteAlpha.600"}
+                  bg={"white"}
                   focusBorderColor="#C77DFF"
-                  _focus={{
-                    bg: "whiteAlpha.900",
-                  }}
                 />
                 <IconButton
                   bg={"gray.800"}

@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ArrowForwardIcon, ArrowBackIcon } from "@chakra-ui/icons";
 import axios from "axios";
 import {
   Box,
-  Grid,
   Heading,
   Text,
   Button,
-  Avatar,
-  Image,
   Input,
   Select,
   Card,
@@ -22,7 +18,8 @@ import {
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import Navbar from "../components/Navbar";
-import { BsBookmarkPlus } from "react-icons/bs";
+import Footer from "../components/Footer";
+import { BsBookmarkPlus, BsHeart } from "react-icons/bs";
 
 const Explore = () => {
   const [articles, setArticles] = useState([]);
@@ -35,7 +32,7 @@ const Explore = () => {
     try {
       const url = `https://minpro-blog.purwadhikabootcamp.com/api/blog?id_cat=${selectedCategory}&sort=${sortOrder}&page=1`;
       const response = await axios.get(url);
-      console.log(response.data);
+      // console.log(response.data);
       setArticles(response.data.result);
     } catch (error) {
       console.log(error);
@@ -153,7 +150,6 @@ const Explore = () => {
           <option value="7">Fiksi</option>
         </Select>
         <Select
-          placeholder="Sort"
           rounded={"xl"}
           focusBorderColor="#C77DFF"
           value={sortOrder}
@@ -165,7 +161,7 @@ const Explore = () => {
           <option value="createdAt_DESC">Newest First</option>
         </Select>
       </Box>
-      <Box m={"24px 60px"} gap={4}>
+      <Box p={"24px 60px"} gap={4}>
         <Swiper slidesPerView={3}>
           {sortedArticles
             .slice((activePage - 1) * 3, activePage * 3)
@@ -205,17 +201,24 @@ const Explore = () => {
                         {article.Category.name}
                       </Tag>
                     </CardBody>
-                    <CardFooter mt={"-4"}>
+                    <CardFooter
+                      display={"flex"}
+                      justifyContent={"space-between"}
+                      mt={"-4"}
+                    >
                       <IconButton
-                        bgColor={"white"}
-                        color={"black"}
-                        rounded={"full"}
+                        variant={"ghost"}
                         size={"md"}
-                        _hover={{
-                          bgColor: "gray.100",
-                        }}
+                        rounded={"full"}
                         aria-label="Bookmark"
                         icon={<BsBookmarkPlus />}
+                      />
+                      <IconButton
+                        variant={"ghost"}
+                        size={"md"}
+                        rounded={"full"}
+                        aria-label="Like"
+                        icon={<BsHeart />}
                       />
                     </CardFooter>
                   </Card>
@@ -224,7 +227,7 @@ const Explore = () => {
             ))}
         </Swiper>
       </Box>
-      <Box display="flex" justifyContent="center" mt={8}>
+      <Box display="flex" justifyContent="center" mb={4}>
         <Button
           size={"sm"}
           colorScheme="blackAlpha"
@@ -243,6 +246,7 @@ const Explore = () => {
           Next
         </Button>
       </Box>
+      <Footer />
     </Box>
   );
 };

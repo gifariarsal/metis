@@ -11,7 +11,7 @@ import {
   Tag,
   Flex,
 } from "@chakra-ui/react";
-import { BsBookmarkPlus } from "react-icons/bs";
+import { BsBookmarkPlus, BsHeart } from "react-icons/bs";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -86,53 +86,60 @@ const BlogCard = () => {
           .map((article) => (
             <SwiperSlide key={article.id}>
               <Box display={"flex"} justifyContent={"space-between"} p={4}>
-                  <Card w={"full"} h={"430px"}>
-                    <CardBody>
-                      <Box
-                        height={"100px"}
-                        position="relative"
-                        backgroundPosition="center"
-                        backgroundRepeat="no-repeat"
-                        backgroundSize="cover"
-                        borderRadius="lg"
-                        backgroundImage={`https://minpro-blog.purwadhikabootcamp.com/${article.imageURL}`}
-                      ></Box>
-                      <Stack mt="6" spacing="3">
-                        <Heading size="md" noOfLines={1}>
-                          {article.title}
-                        </Heading>
-                        <Text noOfLines={2}>{article.content}</Text>
-                        <Text fontSize={"sm"} color={"gray.500"}>
-                          {article.User.username}
-                        </Text>
-                        <Text fontSize={"sm"} color={"gray.500"}>
-                          Published:{" "}
-                          {new Date(article.createdAt).toLocaleDateString()}
-                        </Text>
-                      </Stack>
-                      <Tag
-                        size={"md"}
-                        rounded={"full"}
-                        mt={4}
-                        fontWeight={"normal"}
-                      >
-                        {article.Category.name}
-                      </Tag>
-                    </CardBody>
-                    <CardFooter mt={"-4"}>
-                      <IconButton
-                        bgColor={"white"}
-                        color={"black"}
-                        rounded={"full"}
-                        size={"md"}
-                        _hover={{
-                          bgColor: "gray.100",
-                        }}
-                        aria-label="Bookmark"
-                        icon={<BsBookmarkPlus />}
-                      />
-                    </CardFooter>
-                  </Card>
+                <Card w={"full"} h={"430px"}>
+                  <CardBody>
+                    <Box
+                      height={"100px"}
+                      position="relative"
+                      backgroundPosition="center"
+                      backgroundRepeat="no-repeat"
+                      backgroundSize="cover"
+                      borderRadius="lg"
+                      backgroundImage={`https://minpro-blog.purwadhikabootcamp.com/${article.imageURL}`}
+                    ></Box>
+                    <Stack mt="6" spacing="3">
+                      <Heading size="md" noOfLines={1}>
+                        {article.title}
+                      </Heading>
+                      <Text noOfLines={2}>{article.content}</Text>
+                      <Text fontSize={"sm"} color={"gray.500"}>
+                        {article.User.username}
+                      </Text>
+                      <Text fontSize={"sm"} color={"gray.500"}>
+                        Published:{" "}
+                        {new Date(article.createdAt).toLocaleDateString()}
+                      </Text>
+                    </Stack>
+                    <Tag
+                      size={"md"}
+                      rounded={"full"}
+                      mt={4}
+                      fontWeight={"normal"}
+                    >
+                      {article.Category.name}
+                    </Tag>
+                  </CardBody>
+                  <CardFooter
+                    display={"flex"}
+                    justifyContent={"space-between"}
+                    mt={"-4"}
+                  >
+                    <IconButton
+                      variant={"ghost"}
+                      size={"md"}
+                      rounded={"full"}
+                      aria-label="Bookmark"
+                      icon={<BsBookmarkPlus />}
+                    />
+                    <IconButton
+                      variant={"ghost"}
+                      size={"md"}
+                      rounded={"full"}
+                      aria-label="Like"
+                      icon={<BsHeart />}
+                    />
+                  </CardFooter>
+                </Card>
               </Box>
             </SwiperSlide>
           ))}

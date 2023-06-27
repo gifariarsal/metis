@@ -43,10 +43,10 @@ const ChangePassword = () => {
       alignItems={"center"}
       h={"100vh"}
     >
-      <Box boxShadow={"lg"} rounded={"2xl"} w={"30vw"}>
+      <Box boxShadow={"lg"} rounded={"2xl"} w={"40vw"}>
         <form>
-          <VStack px={10} py={10} gap={6} w={"full"}>
-            <Text fontSize={"xl"} fontWeight={700}>
+          <VStack px={10} py={10} w={"full"}>
+            <Text fontSize={"xl"} fontWeight={700} mb={6}>
               Change Password
             </Text>
             <FormControl mb={4} w={"100%"} isRequired>
@@ -113,7 +113,7 @@ const ChangePassword = () => {
               display={"flex"}
               justifyContent={"center"}
               w={"100%"}
-              mt={"6"}
+              mt={6}
               rounded={"lg"}
               color={"white"}
               bgColor={"#9D4EDD"}
