@@ -12,7 +12,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { BsBookmarkPlus } from "react-icons/bs";
+import { BsBookmarkPlus, BsHeart } from "react-icons/bs";
 import Navbar from "../components/Navbar";
 import axios from "axios";
 import Footer from "../components/Footer";
@@ -22,7 +22,7 @@ const Top10 = () => {
   const fetchArticles = async () => {
     try {
       const response = await axios.get(
-        "https://minpro-blog.purwadhikabootcamp.com/api/blog/pagFav"
+        "https://minpro-blog.purwadhikabootcamp.com/api/blog/pagFav?size=10&sort=DESC&orderBy=total_fav"
       );
       setArticles(response.data.result);
     } catch (error) {
@@ -63,7 +63,6 @@ const Top10 = () => {
               overflow="hidden"
               variant="outline"
               rounded={"xl"}
-              h={"270px"}
             >
               <Box w={"70%"}>
                 <Stack>
@@ -92,18 +91,24 @@ const Top10 = () => {
                     </Tag>
                   </CardBody>
 
-                  <CardFooter>
+                  <CardFooter gap={10}>
                     <IconButton
-                      bgColor={"white"}
-                      color={"black"}
+                      variant={"ghost"}
                       rounded={"full"}
                       size={"md"}
-                      _hover={{
-                        bgColor: "gray.100",
-                      }}
                       aria-label="Bookmark"
                       icon={<BsBookmarkPlus />}
                     />
+                    <Box display={"flex"} gap={2} alignItems={"center"}>
+                      <IconButton
+                        variant={"ghost"}
+                        size={"md"}
+                        rounded={"full"}
+                        aria-label="Like"
+                        icon={<BsHeart />}
+                      />
+                      <Text>{article.total_fav}</Text>
+                    </Box>
                   </CardFooter>
                 </Stack>
               </Box>

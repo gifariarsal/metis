@@ -7,16 +7,15 @@ import {
   Input,
   Select,
   Text,
+  Textarea,
   VStack,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import "./WriteBlog.css";
-import TagsInput from "react-tagsinput";
-import "react-tagsinput/react-tagsinput.css";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+import { makeArticle } from "../redux/reducer/ArticleReducer";
 
 function withAuth(Component) {
   return function WrappedComponent(props) {
@@ -38,183 +37,137 @@ function withAuth(Component) {
 }
 
 const WriteBlog = () => {
-  //set date published to current date
-  const currentDate = new Date().toISOString().split("T")[0];
 
-  const [isFormEmpty, setIsFormEmpty] = useState(false);
-  const [content, setContent] = useState("");
-  const [previewImage, setPreviewImage] = useState(null); // New state for preview image
+  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedImage, setSelectedImage] = useState(null);
+  const dispatch = useDispatch();
 
-  const handleContent = (value) => {
-    setContent(value);
+  const handleOptionChange = (event) => {
+    setSelectedOption(event.target.value);
   };
 
-  // validation for image size and format
-  const handleImageChange = (event) => {
+  const handleImageUpload = (event) => {
     const file = event.target.files[0];
+    setSelectedImage(URL.createObjectURL(file));
+  };
 
-    const allowedSizeInBytes = 2 * 1024 * 1024; // 2MB
+  const [category, setCategory] = useState([]);
 
-    if (file.size > allowedSizeInBytes) {
-      alert("File size must be maximum 2MB");
-      event.target.value = "";
-    } else {
-      setPreviewImage(URL.createObjectURL(file)); // Set the preview image URL
+  const fetchData = async () => {
+    try {
+      const res = await axios.get(
+        "https://minpro-blog.purwadhikabootcamp.com/api/blog/allCategory"
+      );
+      setCategory(res.data);
+    } catch (error) {
+      alert("Error fetching data:", error);
     }
   };
 
-  // keywords
-  const [keywords, setKeywords] = useState([]);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  const handleKeywordsChange = (newKeywords) => {
-    setKeywords(newKeywords);
-  };
-
-  const [category, setCategory] = useState("");
-  const [keyword, setKeyword] = useState("");
-
-  const handleCategoryChange = (event) => {
-    setCategory(event.target.value);
-  };
-
-  const handleKeywordChange = (event) => {
-    setKeyword(event.target.value);
-  };
-
-  const handleSubmitCategory = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    // Lakukan sesuatu dengan nilai kategori dan kata kunci yang dikirim
-    console.log("Kategori:", category);
-    console.log("Kata Kunci:", keyword);
-    // Reset nilai kategori dan kata kunci
-    setCategory("");
-    setKeyword("");
-  };
 
-  const handleCreateBlog = () => {
-    // Check if any required fields are empty
-    const title = document.getElementById("title").value;
-    const author = document.getElementById("author").value;
-    const publicationDate = document.getElementById("publicationDate").value;
-    const category = document.getElementById("category").value;
-    const content = document.getElementById("content").value;
-
-    if (!title || !author || !publicationDate || !category || !content) {
-      setIsFormEmpty(true);
-      return;
-    }
-
-    // Perform create blog logic
-    setIsFormEmpty(false);
+    const data = {
+      title: document.getElementById("title").value,
+      content: document.getElementById("content").value,
+      country: document.getElementById("country").value,
+      CategoryId: selectedOption,
+      url: "/",
+      keywords: document.getElementById("keywords").value,
+    };
+    const file = document.getElementById("file").files[0];
+    dispatch(makeArticle(data, file));
   };
 
   return (
     <Box>
       <Navbar />
-      <VStack spacing={"4"} p={"20px 200px"}>
-        <Text
-          w={"100%"}
-          fontSize={"2xl"}
-          display={"flex"}
-          justifyContent={"flex-start"}
-          fontWeight={"bold"}
-        >
-          Write Blog
-        </Text>
-        <FormControl id="title">
-          <FormLabel>Title</FormLabel>
-          <Input type="text" rounded={"lg"} />
-        </FormControl>
-        <FormControl id="author">
-          <FormLabel>Author</FormLabel>
-          <Input type="text" rounded={"lg"} />
-        </FormControl>
-        <FormControl id="date">
-          <FormLabel>Date Published</FormLabel>
-          <Input type="date" value={currentDate} isDisabled rounded={"lg"} />
-        </FormControl>
-        <FormControl id="content">
-          <FormLabel>Content</FormLabel>
-          <div className="text-editor">
-            <ReactQuill
-              value={content}
-              onChange={handleContent}
-              required
-            ></ReactQuill>
-          </div>
-        </FormControl>
-        <FormControl onSubmit={handleSubmitCategory} id="category">
-          <FormLabel>Category</FormLabel>
-          <Select
-            value={category}
-            placeholder="Select category"
-            onChange={handleCategoryChange}
+      <form onSubmit={handleSubmit}>
+        <VStack spacing={"4"} p={"20px 200px"}>
+          <Text
+            w={"100%"}
+            fontSize={"2xl"}
+            display={"flex"}
+            justifyContent={"flex-start"}
+            fontWeight={"bold"}
           >
-            <option value="1">Bisnis</option>
-            <option value="2">Ekonomi</option>
-            <option value="3">Teknologi</option>
-            <option value="4">Olahraga</option>
-            <option value="5">Kuliner</option>
-            <option value="6">Internasional</option>
-            <option value="7">Fiksi</option>
-          </Select>
-        </FormControl>
-        <FormControl id="keyword">
-          <FormLabel>Keyword</FormLabel>
-          <TagsInput value={keywords} onChange={handleKeywordsChange} />
-        </FormControl>
-        <Box
-          display={"flex"}
-          justifyContent={"space-between"}
-          alignItems={"center"}
-          w={"full"}
-        >
-          <FormControl id="image">
+            Write Blog
+          </Text>
+          <FormControl>
+            <FormLabel>Title</FormLabel>
+            <Input type="text" id="title" rounded={"lg"} />
+          </FormControl>
+          <FormControl id="content">
+            <FormLabel>Content</FormLabel>
+            <Textarea h={"250px"}></Textarea>
+          </FormControl>
+          <FormControl id="category">
+            <FormLabel>Category</FormLabel>
+            <Select value={selectedOption} onChange={handleOptionChange}>
+              <option value="">Select Category</option>
+              {category &&
+                category.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.name}
+                  </option>
+                ))}
+            </Select>
+          </FormControl>
+          <FormControl>
+            <FormLabel>Keyword</FormLabel>
+            <Input type="text" id="keywords" />
+          </FormControl>
+          <FormControl>
+            <FormLabel>Country</FormLabel>
+            <Input type="text" id="country" />
+          </FormControl>
+          <FormControl>
             <FormLabel>Image</FormLabel>
             <Input
               type="file"
+              id="file"
               variant={""}
               accept=".jpg, .jpeg, png"
-              onChange={handleImageChange}
+              onChange={handleImageUpload}
             />
-            {previewImage && (
-              <img src={previewImage} alt="Preview" maxH="200px" />
+            {selectedImage && (
+              <Box mb={6} position={"relative"}>
+                <img
+                  src={selectedImage}
+                  alt="Preview"
+                  style={{
+                    maxWidth: "332px",
+                    maxHeight: "300px",
+                    marginTop: "10px",
+                  }}
+                />
+              </Box>
             )}
             <FormHelperText fontSize={"xs"} color={"gray.400"}>
               Image format should be .jpg, .jpeg, or .png with maximum size is 2
               MB
             </FormHelperText>
           </FormControl>
-          <FormControl id="image">
-            <FormLabel>Video</FormLabel>
-            <Input
-              type="file"
-              variant={""}
-              accept="video/*"
-              // onChange={handleImageChange}
-            />
-            <FormHelperText fontSize={"xs"} color={"gray.400"}>
-              Video's maximum size is 100
-              MB
-            </FormHelperText>
-          </FormControl>
-        </Box>
-
-        <Button
-          display={"flex"}
-          justifyContent={"center"}
-          w={"100%"}
-          mt={"10"}
-          rounded={"lg"}
-          color={"white"}
-          onClick={handleCreateBlog}
-          bgColor={"#9D4EDD"}
-          _hover={{ bgColor: "#B75CFF" }}
-          _active={{ bgColor: "#6C12B5" }}
-        >
-          Publish
-        </Button>
-      </VStack>
+          <Button
+            type="submit"
+            display={"flex"}
+            justifyContent={"center"}
+            w={"100%"}
+            mt={"10"}
+            rounded={"lg"}
+            color={"white"}
+            bgColor={"#9D4EDD"}
+            _hover={{ bgColor: "#B75CFF" }}
+            _active={{ bgColor: "#6C12B5" }}
+          >
+            Publish
+          </Button>
+        </VStack>
+      </form>
     </Box>
   );
 };

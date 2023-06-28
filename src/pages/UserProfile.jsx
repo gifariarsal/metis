@@ -12,6 +12,7 @@ import {
 import React, { useEffect } from "react";
 import ProfileDetail from "../components/ProfileDetail";
 import Navbar from "../components/Navbar";
+import MyWritings from "../components/MyWritings";
 import { useNavigate } from "react-router-dom";
 
 function withAuth(Component) {
@@ -41,7 +42,7 @@ const UserProfile = () => {
         <ProfileDetail />
       </Box>
       <Box display={"flex"} justifyContent={"flex-start"} m={"40px 60px"}>
-        <Tabs position="relative" variant="unstyled">
+        <Tabs w={"full"} position="relative" variant="unstyled">
           <TabList gap={10}>
             <Tab>My Writings</Tab>
             <Tab>Bookmarks</Tab>
@@ -55,23 +56,16 @@ const UserProfile = () => {
           />
           <TabPanels>
             <TabPanel>
-              <p>one!</p>
+              <MyWritings />
             </TabPanel>
             <TabPanel>
-              <p>two!</p>
+              <p>This section will show articles that user's save</p>
             </TabPanel>
             <TabPanel>
-              <p>three!</p>
+              <p>This section will show articles that user's like</p>
             </TabPanel>
           </TabPanels>
         </Tabs>
-        <Spacer />
-        <Select focusBorderColor="#C77DFF" w={"fit-content"}>
-          <option value="newest" defaultChecked>
-            Newest
-          </option>
-          <option value="latest">Latest</option>
-        </Select>
       </Box>
     </>
   );

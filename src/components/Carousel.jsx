@@ -79,7 +79,6 @@ export default function CaptionCarousel() {
       {/* Left Icon */}
       <IconButton
         aria-label="left-arrow"
-        variant="ghost"
         position="absolute"
         left={side}
         top={top}
@@ -93,7 +92,6 @@ export default function CaptionCarousel() {
       {/* Right Icon */}
       <IconButton
         aria-label="right-arrow"
-        variant="ghost"
         position="absolute"
         right={side}
         top={top}

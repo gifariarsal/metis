@@ -36,7 +36,7 @@ const EditProfileModal = ({ isOpen, onClose }) => {
                 <FormLabel>User Icon</FormLabel>
                 <Stack direction={["column", "row"]} spacing={6}>
                   <Center>
-                    <Avatar size="xl" src="">
+                    <Avatar size="xl" name="User" src="/profile">
                       <AvatarBadge
                         as={IconButton}
                         size="sm"
