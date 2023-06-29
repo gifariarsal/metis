@@ -21,7 +21,7 @@ import axios from "axios";
 import { BsBookmarkPlus, BsHeart } from "react-icons/bs";
 // import { useNavigate } from "react-router-dom";
 
-const BlogFilter = () => {
+const MyWritings = () => {
   const [articles, setArticles] = useState([]);
   const fetchArticles = async () => {
     try {
@@ -166,7 +166,12 @@ const BlogFilter = () => {
       </Box>
       <SimpleGrid mb={4} columns={[2, null, 3]} spacing={4}>
         {sortedArticles.map((article) => (
-          <Box display={"flex"} justifyContent={"space-between"} p={4}>
+          <Box
+            key={article.id}
+            display={"flex"}
+            justifyContent={"space-between"}
+            p={4}
+          >
             <Card w={"full"} h={"430px"}>
               <CardBody>
                 <Box
@@ -223,4 +228,4 @@ const BlogFilter = () => {
   );
 };
 
-export default BlogFilter;
+export default MyWritings;

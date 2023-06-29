@@ -3,21 +3,55 @@ import {
   Box,
   Button,
   Flex,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import EditProfileModal from "./EditProfileModal";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import ChangeEmailModal from "./ChangeEmailModal";
+import ChangePhoneModal from "./ChangePhoneModal";
+import ChangeUsernameModal from "./ChangeUsernameModal";
 
 const ProfileDetail = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  // const { isOpen, onOpen, onClose } = useDisclosure();
 
   // const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [avatar, setAvatar] = useState("");
   const [email, setEmail] = useState("");
+
+  const {
+    isOpen: isOpenUsername,
+    onOpen: onOpenUsername,
+    onClose: onCloseUsername,
+  } = useDisclosure();
+
+  const {
+    isOpen: isOpenPhone,
+    onOpen: onOpenPhone,
+    onClose: onClosePhone,
+  } = useDisclosure();
+
+  const {
+    isOpen: isOpenEmail,
+    onOpen: onOpenEmail,
+    onClose: onCloseEmail,
+  } = useDisclosure();
+
+  const onUsernameChange = () => {
+    onOpenUsername();
+  };
+  const onEmailChange = () => {
+    onOpenEmail();
+  };
+  const onPhoneChange = () => {
+    onOpenPhone();
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,8 +66,11 @@ const ProfileDetail = () => {
           }
         );
         console.log(response);
-        const { username: fetchedUsername, avatar: fetchedAvatar, email: fetchEmail } =
-          response.data;
+        const {
+          username: fetchedUsername,
+          avatar: fetchedAvatar,
+          email: fetchEmail,
+        } = response.data;
         setUsername(fetchedUsername);
         setAvatar(fetchedAvatar);
         setEmail(fetchEmail);
@@ -43,10 +80,6 @@ const ProfileDetail = () => {
     };
     fetchData();
   }, []);
-
-  const onSaveChange = () => {
-    onOpen();
-  };
 
   return (
     <>
@@ -61,12 +94,47 @@ const ProfileDetail = () => {
           <Text color={"gray.500"} mb={4}>
             {email}
           </Text>
-          <Button fontSize={"sm"} fontWeight={500} onClick={onSaveChange}>
-            Edit Profile
-          </Button>
+          <Menu>
+            <MenuButton
+              as={Button}
+              rounded={"full"}
+              variant={"link"}
+              cursor={"pointer"}
+              minW={0}
+            >
+              <Button fontSize={"sm"} fontWeight={500}>
+                Edit Profile
+              </Button>
+            </MenuButton>
+            <MenuList w={"100px"}>
+              <Button variant={"unstyled"} w={"full"}>
+                <MenuItem>Change Username</MenuItem>
+              </Button>
+              <Button variant={"unstyled"} w={"full"} onClick={onEmailChange}>
+                <MenuItem>Change Email</MenuItem>
+              </Button>
+              <Button variant={"unstyled"} w={"full"}>
+                <MenuItem>Change Phone Number</MenuItem>
+              </Button>
+            </MenuList>
+          </Menu>
         </Box>
       </Flex>
-      <EditProfileModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
+      {/* <ChangeUsernameModal
+        isOpen={isOpenUsername}
+        onOpen={onOpenUsername}
+        onClose={onCloseUsername}
+      />
+      <ChangePhoneModal
+        isOpen={isOpenPhone}
+        onOpen={onOpenPhone}
+        onClose={onClosePhone}
+      /> */}
+      <ChangeEmailModal
+        isOpen={isOpenEmail}
+        onOpen={onOpenEmail}
+        onClose={onCloseEmail}
+      />
     </>
   );
 };
