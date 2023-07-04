@@ -36,7 +36,6 @@ const Top10 = () => {
 
   const [popularArticles, setPopularArticles] = useState([]);
 
-  // Sort articles by popularity and slice the top 5
   const sortedArticles = articles
     .sort((a, b) => b.total_fav - a.total_fav)
     .slice(0, 10);

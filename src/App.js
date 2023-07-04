@@ -8,7 +8,6 @@ import WriteBlog from './pages/WriteBlog';
 import ResetPassword from './pages/ResetPassword';
 import ChangePassword from './pages/ChangePassword';
 import Top10 from './pages/Top10';
-import Explore from './pages/Explore';
 import ChangeEmailVer from './pages/ChangeEmailVer';
 
 
@@ -17,15 +16,12 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/explore" element={<Explore />} />
         <Route path="/top10" element={<Top10 />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/user-profile" element={<UserProfile />} />
         <Route path="/verification/:token" element={<EmailVerification />} />
-        <Route
-          path="/verification-change-email/:token"
-          element={<ChangeEmailVer />}
+        <Route path="/verification-change-email/:token" element={<ChangeEmailVer />}
         />
         <Route path="/write-blog" element={<WriteBlog />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />

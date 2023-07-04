@@ -107,20 +107,20 @@ const ProfileDetail = () => {
               </Button>
             </MenuButton>
             <MenuList w={"100px"}>
-              <Button variant={"unstyled"} w={"full"}>
+              <Button variant={"unstyled"} w={"full"} onClick={onUsernameChange}>
                 <MenuItem>Change Username</MenuItem>
               </Button>
               <Button variant={"unstyled"} w={"full"} onClick={onEmailChange}>
                 <MenuItem>Change Email</MenuItem>
               </Button>
-              <Button variant={"unstyled"} w={"full"}>
+              <Button variant={"unstyled"} w={"full"} onClick={onPhoneChange}>
                 <MenuItem>Change Phone Number</MenuItem>
               </Button>
             </MenuList>
           </Menu>
         </Box>
       </Flex>
-      {/* <ChangeUsernameModal
+      <ChangeUsernameModal
         isOpen={isOpenUsername}
         onOpen={onOpenUsername}
         onClose={onCloseUsername}
@@ -129,7 +129,7 @@ const ProfileDetail = () => {
         isOpen={isOpenPhone}
         onOpen={onOpenPhone}
         onClose={onClosePhone}
-      /> */}
+      />
       <ChangeEmailModal
         isOpen={isOpenEmail}
         onOpen={onOpenEmail}
