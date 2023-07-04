@@ -108,6 +108,7 @@ const Explore = () => {
     } else if (sortOrder === "createdAt_DESC") {
       return b.createdAt.localeCompare(a.createdAt);
     }
+    return 0;
   });
 
   return (

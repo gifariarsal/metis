@@ -10,6 +10,8 @@ const Kuliner = () => {
   const [activePage, setActivePage] = useState(1);
   const [index, setIndex] = useState(1);
   const [page, setPage] = useState(0);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [sortOrder, setSortOrder] = useState("DESC");
   const [popularArticles, setPopularArticles] = useState([]);
 
   const fetchData = async () => {
@@ -26,7 +28,7 @@ const Kuliner = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [selectedCategory, sortOrder, activePage]);
 
   const sortedArticles = articles
     .sort((a, b) => b.total_fav - a.total_fav)
@@ -38,12 +40,14 @@ const Kuliner = () => {
   }, [sortedArticles]);
 
   const handleNextPage = () => {
-    if (index < page) setIndex(index + 1);
+    if (activePage < Math.ceil(articles.length / 4)) {
+      setActivePage(activePage + 1);
+    }
   };
 
   const handlePrevPage = () => {
-    if (index > 1) {
-      setIndex(index - 1);
+    if (activePage > 1) {
+      setActivePage(activePage - 1);
     }
   };
 
@@ -52,8 +56,18 @@ const Kuliner = () => {
   };
   const renderPageButtons = () => {
     const totalPages = page;
-    const startPage = Math.max(1, index - 2);
-    const endPage = Math.min(startPage + 4, totalPages);
+    let startPage;
+    let endPage;
+
+    if (totalPages <= 3) {
+      // If total pages is less than or equal to 3, display all pages
+      startPage = 1;
+      endPage = totalPages;
+    } else {
+      // Display the first three pages
+      startPage = 1;
+      endPage = 3;
+    }
 
     const pageButtons = [];
     for (let pageNum = startPage; pageNum <= endPage; pageNum++) {
@@ -63,8 +77,8 @@ const Kuliner = () => {
           mx={1}
           size="sm"
           onClick={() => handlePageChange(pageNum)}
-          isActive={index === pageNum}
-          disabled={index === pageNum}
+          isActive={activePage === pageNum}
+          disabled={activePage === pageNum}
         >
           {pageNum}
         </Button>
@@ -82,7 +96,7 @@ const Kuliner = () => {
       <Box>
         <Swiper slidesPerView={4}>
           {sortedArticles
-            .slice((activePage - 1) * 5, activePage * 5)
+            .slice((activePage - 1) * 4, activePage * 4)
             .map((article) => (
               <SwiperSlide key={article.id}>
                 <BlogCard
@@ -111,7 +125,7 @@ const Kuliner = () => {
           size={"sm"}
           colorScheme="blackAlpha"
           onClick={handleNextPage}
-          disabled={activePage === Math.ceil(articles.length / 5)}
+          disabled={activePage === Math.ceil(articles.length / 4)}
         >
           Next
         </Button>
