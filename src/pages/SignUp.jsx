@@ -8,6 +8,8 @@ import {
   FormLabel,
   Image,
   Input,
+  InputGroup,
+  InputRightElement,
   Text,
   VStack,
   useToast,
@@ -18,8 +20,13 @@ import axios from "axios";
 import * as Yup from "yup";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 
 const SignUp = () => {
+  const [show, setShow] = React.useState(false);
+  const handleClick = () => setShow(!show);
+  const [showConfirm, setShowConfirm] = React.useState(false);
+  const handleClickConfirm = () => setShowConfirm(!showConfirm);
   const navigate = useNavigate();
   const toast = useToast();
   const register = async (values) => {
@@ -197,20 +204,31 @@ const SignUp = () => {
                 isInvalid={formik.touched.password && formik.errors.password}
               >
                 <FormLabel mt={4}>Password</FormLabel>
-                <Input
-                  id="password"
-                  name="password"
-                  type="password"
-                  placeholder="6+ chars, min. 1 uppercase and 1 symbol"
-                  _placeholder={{
-                    fontSize: "xs",
-                    color: "gray.500",
-                  }}
-                  rounded={"lg"}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.password}
-                />
+                <InputGroup>
+                  <Input
+                    id="password"
+                    name="password"
+                    type={show ? "text" : "password"}
+                    placeholder="6+ chars, min. 1 uppercase and 1 symbol"
+                    _placeholder={{
+                      fontSize: "xs",
+                      color: "gray.500",
+                    }}
+                    rounded={"lg"}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.password}
+                  />
+                  <InputRightElement width="3.5rem">
+                    <Button h="1.75rem" size="sm" onClick={handleClick}>
+                      {show ? (
+                        <IoEyeOffOutline size={"20px"} />
+                      ) : (
+                        <IoEyeOutline size={"20px"} />
+                      )}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
                 {formik.touched.password && formik.errors.password && (
                   <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
                 )}
@@ -223,15 +241,26 @@ const SignUp = () => {
                 }
               >
                 <FormLabel mt={4}>Confirm Password</FormLabel>
-                <Input
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  type="password"
-                  rounded={"lg"}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.confirmPassword}
-                />
+                <InputGroup>
+                  <Input
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    type={showConfirm ? "text" : "password"}
+                    rounded={"lg"}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.confirmPassword}
+                  />
+                  <InputRightElement width="3.5rem">
+                    <Button h="1.75rem" size="sm" onClick={handleClickConfirm}>
+                      {showConfirm ? (
+                        <IoEyeOffOutline size={"20px"} />
+                      ) : (
+                        <IoEyeOutline size={"20px"} />
+                      )}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
                 {formik.touched.confirmPassword &&
                   formik.errors.confirmPassword && (
                     <FormErrorMessage>

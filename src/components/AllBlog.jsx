@@ -35,7 +35,7 @@ const Explore = () => {
 
   useEffect(() => {
     fetchData();
-  }, [selectedCategory, sortOrder, index]);
+  }, [selectedCategory, sortOrder, index, searchTerm]);
 
   const handleNextPage = () => {
     if (index < page) setIndex(index + 1);
