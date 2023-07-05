@@ -52,9 +52,9 @@ const Navbar = () => {
                 ></Image>
               </Link>
               <Link to={"/top10"}>
-              <Button size={"sm"} ml={4}>
-                Top 10 Articles
-              </Button>
+                <Button size={"sm"} ml={4}>
+                  Top 10 Articles
+                </Button>
               </Link>
             </Flex>
           </Box>
@@ -88,13 +88,7 @@ const Navbar = () => {
                       cursor={"pointer"}
                       minW={0}
                     >
-                      <Avatar
-                        size={"sm"}
-                        name="User"
-                        src={
-                          "/profile"
-                        }
-                      />
+                      <Avatar size={"sm"} name="User" src={"/profile"} />
                     </MenuButton>
                     <MenuList>
                       <Link to={"/user-profile"}>
@@ -104,14 +98,9 @@ const Navbar = () => {
                         <MenuItem>Change Password</MenuItem>
                       </Link>
                       <MenuDivider />
-                      <MenuItem color={"red"}>
-                        <Button
-                          variant={"unstyled"}
-                          onClick={() => handleLogout()}
-                        >
-                          Sign Out
-                        </Button>
-                      </MenuItem>
+                      <Link onClick={() => handleLogout()}>
+                        <MenuItem color={"red"}>Sign Out</MenuItem>
+                      </Link>
                     </MenuList>
                   </Menu>
                 </Flex>
